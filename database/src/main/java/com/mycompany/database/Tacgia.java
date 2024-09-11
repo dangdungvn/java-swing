@@ -25,6 +25,9 @@ public class Tacgia extends javax.swing.JFrame {
 
     /**
      * Creates new form Tacgia
+     *
+     * @throws java.lang.ClassNotFoundException
+     * @throws java.sql.SQLException
      */
     public Tacgia() throws ClassNotFoundException, SQLException {
         initComponents();
@@ -327,14 +330,20 @@ public class Tacgia extends javax.swing.JFrame {
         // TODO add your handling code here:
         try {
             String mtg = EdtMtg.getText().trim();
-            String sql = "Delete From tacgia Where mtg = ('" + mtg + "')";
-            conn = Database.connect();
-            Statement st = conn.createStatement();
-            st.executeUpdate(sql);
-            st.close();
-            conn.close();
-            LoadDB();
-        } catch (Exception e) {
+            int confirm = JOptionPane.showConfirmDialog(this,
+                    "Bạn có chắc chắn muốn xóa tác giả với mã " + mtg + "?",
+                    "Xác nhận xóa",
+                    JOptionPane.YES_NO_OPTION);
+            if (confirm == JOptionPane.YES_OPTION) {
+                String sql = "Delete From tacgia Where mtg = ('" + mtg + "')";
+                conn = Database.connect();
+                Statement st = conn.createStatement();
+                st.executeUpdate(sql);
+                st.close();
+                conn.close();
+                LoadDB();
+            }
+        } catch (ClassNotFoundException | SQLException e) {
             JOptionPane.showMessageDialog(this, e);
         }
     }//GEN-LAST:event_BtnXoaActionPerformed
@@ -417,12 +426,11 @@ public class Tacgia extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 try {
                     new Tacgia().setVisible(true);
-                } catch (ClassNotFoundException ex) {
-                    Logger.getLogger(Tacgia.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (SQLException ex) {
+                } catch (ClassNotFoundException | SQLException ex) {
                     Logger.getLogger(Tacgia.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
