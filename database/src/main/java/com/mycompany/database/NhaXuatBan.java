@@ -84,8 +84,7 @@ public class NhaXuatBan extends javax.swing.JFrame {
                 kq = true;
             }
             conn.close();
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (ClassNotFoundException | SQLException e) {
         }
         return kq;
     }
@@ -114,8 +113,7 @@ public class NhaXuatBan extends javax.swing.JFrame {
             }
             tbNxb.setModel(model);
             conn.close();
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (ClassNotFoundException | SQLException e) {
         }
     }
 

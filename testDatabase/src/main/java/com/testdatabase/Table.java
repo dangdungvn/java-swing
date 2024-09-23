@@ -2,6 +2,8 @@ package com.testdatabase;
 
 import java.awt.Color;
 import java.awt.Component;
+
+import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -16,17 +18,22 @@ public class Table extends JTable {
         getTableHeader().setReorderingAllowed(false);
         getTableHeader().setDefaultRenderer(new DefaultTableCellRenderer() {
             @Override
-            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
+                    boolean hasFocus, int row, int column) {
                 TableHeader header = new TableHeader(value + "");
-                header.setHorizontalAlignment(JLabel.CENTER);
+                if (column == 4) {
+                    header.setHorizontalAlignment(JLabel.CENTER);
+                }
                 return header;
             }
         });
         setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
             @Override
-            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
+                    boolean hasFocus, int row, int column) {
 
-                Component component = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+                Component component = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row,
+                        column);
                 if (component instanceof JLabel) {
                     ((JLabel) component).setHorizontalAlignment(JLabel.CENTER);
                 }
