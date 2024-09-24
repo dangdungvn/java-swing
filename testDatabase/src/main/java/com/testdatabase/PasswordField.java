@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.testdatabase;
 
 import com.testdatabase.swing.shadow.ShadowRenderer;
@@ -13,15 +9,11 @@ import java.awt.RenderingHints;
 import java.awt.geom.Area;
 import java.awt.geom.RoundRectangle2D;
 import java.awt.image.BufferedImage;
-import javax.swing.JTextField;
+import javax.swing.JPasswordField;
 import javax.swing.border.EmptyBorder;
-import javax.swing.plaf.basic.BasicTextFieldUI;
+import javax.swing.plaf.basic.BasicPasswordFieldUI;
 
-/**
- *
- * @author Admin
- */
-public class EdtTextFeild extends JTextField {
+public class PasswordField extends JPasswordField {
 
     public int getRound() {
         return round;
@@ -48,7 +40,7 @@ public class EdtTextFeild extends JTextField {
     private BufferedImage imageShadow;
     private final Insets shadowSize = new Insets(2, 5, 8, 5);
 
-    public EdtTextFeild() {
+    public PasswordField() {
         setUI(new TextUI());
         setOpaque(false);
         setForeground(new Color(80, 80, 80));
@@ -111,7 +103,7 @@ public class EdtTextFeild extends JTextField {
         }
     }
 
-    private class TextUI extends BasicTextFieldUI {
+    private class TextUI extends BasicPasswordFieldUI {
 
         //  Override this method to remove background or not paint background
         @Override
