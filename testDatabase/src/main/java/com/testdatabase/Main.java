@@ -5,8 +5,11 @@
 package com.testdatabase;
 
 import java.awt.Color;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.sql.Connection;
 import java.sql.Date;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -22,6 +25,19 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
+import org.apache.poi.ss.usermodel.BorderStyle;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.CellType;
+import org.apache.poi.ss.usermodel.CreationHelper;
+import org.apache.poi.ss.usermodel.FillPatternType;
+import org.apache.poi.ss.usermodel.Font;
+import org.apache.poi.ss.usermodel.HorizontalAlignment;
+import org.apache.poi.ss.usermodel.IndexedColors;
+import org.apache.poi.ss.usermodel.VerticalAlignment;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 public class Main extends javax.swing.JFrame {
 
@@ -56,6 +72,26 @@ public class Main extends javax.swing.JFrame {
         timKiemData();
     }
     static Connection conn;
+
+    private static CellStyle createStyleForHeader(XSSFSheet sheet) {
+        // Create font
+        Font font = sheet.getWorkbook().createFont();
+        font.setFontName("Times New Roman");
+        font.setBold(true);
+        font.setFontHeightInPoints((short) 12); // font size
+        font.setColor(IndexedColors.WHITE.getIndex()); // text color
+
+        // Create CellStyle
+        CellStyle cellStyle = sheet.getWorkbook().createCellStyle();
+        cellStyle.setFont(font);
+        cellStyle.setAlignment(HorizontalAlignment.CENTER);
+        cellStyle.setVerticalAlignment(VerticalAlignment.TOP);
+        cellStyle.setFillForegroundColor(IndexedColors.DARK_GREEN.getIndex());
+        cellStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+        cellStyle.setBorderBottom(BorderStyle.THIN);
+        cellStyle.setWrapText(true);
+        return cellStyle;
+    }
 
     public Date checkNgay(String ngay) throws ParseException {
         String regex = "([12]\\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01]))";
@@ -244,6 +280,7 @@ public class Main extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         spTable = new javax.swing.JScrollPane();
         table = new com.testdatabase.Table();
+        xuatBtn = new com.testdatabase.button.Button();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -286,6 +323,13 @@ public class Main extends javax.swing.JFrame {
         ));
         spTable.setViewportView(table);
 
+        xuatBtn.setText("Xuất");
+        xuatBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                xuatBtnActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout panelBorder2Layout = new javax.swing.GroupLayout(panelBorder2);
         panelBorder2.setLayout(panelBorder2Layout);
         panelBorder2Layout.setHorizontalGroup(
@@ -293,17 +337,24 @@ public class Main extends javax.swing.JFrame {
             .addGroup(panelBorder2Layout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addGroup(panelBorder2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel8)
-                    .addComponent(spTable, javax.swing.GroupLayout.DEFAULT_SIZE, 830, Short.MAX_VALUE))
-                .addGap(20, 20, 20))
+                    .addGroup(panelBorder2Layout.createSequentialGroup()
+                        .addComponent(spTable, javax.swing.GroupLayout.DEFAULT_SIZE, 830, Short.MAX_VALUE)
+                        .addGap(20, 20, 20))
+                    .addGroup(panelBorder2Layout.createSequentialGroup()
+                        .addComponent(jLabel8)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(xuatBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(220, 220, 220))))
         );
         panelBorder2Layout.setVerticalGroup(
             panelBorder2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelBorder2Layout.createSequentialGroup()
                 .addGap(20, 20, 20)
-                .addComponent(jLabel8)
+                .addGroup(panelBorder2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel8)
+                    .addComponent(xuatBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(spTable, javax.swing.GroupLayout.DEFAULT_SIZE, 498, Short.MAX_VALUE)
+                .addComponent(spTable, javax.swing.GroupLayout.DEFAULT_SIZE, 486, Short.MAX_VALUE)
                 .addGap(20, 20, 20))
         );
 
@@ -430,7 +481,7 @@ public class Main extends javax.swing.JFrame {
                     .addComponent(gcEdt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(22, 22, 22)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -451,6 +502,87 @@ public class Main extends javax.swing.JFrame {
     private void tnxbEdtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tnxbEdtActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_tnxbEdtActionPerformed
+
+    private void xuatBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_xuatBtnActionPerformed
+        // TODO add your handling code here:
+        try {
+            XSSFWorkbook workbook = new XSSFWorkbook();
+            XSSFSheet spreadsheet = workbook.createSheet("tacgia");
+            CreationHelper createHelper = workbook.getCreationHelper();
+
+            XSSFRow row = null;
+            Cell cell = null;
+
+            // Tạo dòng tiêu đề
+            row = spreadsheet.createRow((short) 2);
+            row.setHeight((short) 500);
+            cell = row.createCell(0, CellType.STRING);
+            cell.setCellValue("DANH SÁCH NHÀ XUẤT BẢN");
+
+            // Tạo dòng tiêu đề cho bảng
+            row = spreadsheet.createRow((short) 3);
+            row.setHeight((short) 500);
+            cell = row.createCell(0, CellType.STRING);
+            cell.setCellValue("STT");
+            cell = row.createCell(1, CellType.STRING);
+            cell.setCellValue("Mã Tác Giả");
+            cell = row.createCell(2, CellType.STRING);
+            cell.setCellValue("Tên Tác Giả");
+            cell = row.createCell(3, CellType.STRING);
+            cell.setCellValue("Ngày Sinh");
+            cell = row.createCell(4, CellType.STRING);
+            cell.setCellValue("Điện Thoại");
+            cell = row.createCell(5, CellType.STRING);
+            cell.setCellValue("Email");
+            cell = row.createCell(6, CellType.STRING);
+            cell.setCellValue("Địa Chỉ");
+            cell = row.createCell(7, CellType.STRING);
+            cell.setCellValue("Ghi Chú");
+
+            // Tạo CellStyle cho ngày tháng với định dạng dd/MM/yyyy
+            CellStyle dateCellStyle = workbook.createCellStyle();
+            dateCellStyle.setDataFormat(createHelper.createDataFormat().getFormat("dd/MM/yyyy"));
+
+            // Kết nối DB
+            conn = TestDatabase.connect();
+            String sql = "Select * From nxb";
+            PreparedStatement st = conn.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            int i = 0;
+            while (rs.next()) {
+                row = spreadsheet.createRow((short) 4 + i);
+                row.setHeight((short) 400);
+                row.createCell(0).setCellValue(i + 1);
+                row.createCell(1).setCellValue(rs.getString("mxb"));
+                row.createCell(2).setCellValue(rs.getString("tnxb"));
+
+                // Định dạng ngày tháng trong excel
+                Date ngay = new Date(rs.getDate("nxb").getTime());
+                cell = row.createCell(3);
+                cell.setCellValue(ngay);
+                cell.setCellStyle(dateCellStyle);  // Áp dụng định dạng ngày
+
+                row.createCell(4).setCellValue(rs.getString("dt"));
+                row.createCell(5).setCellValue(rs.getString("em"));
+                row.createCell(6).setCellValue(rs.getString("dc"));
+                row.createCell(7).setCellValue(rs.getString("gc"));
+                i++;
+            }
+
+            // Sửa đường dẫn file lưu để tránh lỗi Access Denied
+            File f = new File("D:\\Danhsach.xlsx");
+            FileOutputStream out = new FileOutputStream(f);
+            workbook.write(out);
+            out.close();
+            // Đóng kết nối
+            st.close();
+            conn.close();
+            JOptionPane.showMessageDialog(this, "Thành Công");
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+    }//GEN-LAST:event_xuatBtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -512,5 +644,6 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JScrollPane spTable;
     private com.testdatabase.Table table;
     private com.testdatabase.EdtTextFeild tnxbEdt;
+    private com.testdatabase.button.Button xuatBtn;
     // End of variables declaration//GEN-END:variables
 }
