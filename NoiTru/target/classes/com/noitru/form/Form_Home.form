@@ -226,7 +226,7 @@
                       </Group>
                       <Component id="gtEdt" min="-2" pref="150" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace max="32767" attributes="0"/>
+                  <EmptySpace pref="270" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
                       <Component id="jLabel6" alignment="1" max="32767" attributes="0"/>
                       <Component id="jLabel7" min="-2" pref="73" max="-2" attributes="0"/>
@@ -406,7 +406,7 @@
     <Component class="com.noitru.swing.Button" name="themBtn">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="7d" green="c5" red="72" type="rgb"/>
+          <Color blue="80" green="da" red="85" type="rgb"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Th&#xea;m BN"/>
       </Properties>
@@ -414,7 +414,7 @@
     <Component class="com.noitru.swing.Button" name="suaBtn">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="3b" green="db" red="e2" type="rgb"/>
+          <Color blue="50" green="f4" red="ec" type="rgb"/>
         </Property>
         <Property name="text" type="java.lang.String" value="S&#x1eed;a BN"/>
       </Properties>

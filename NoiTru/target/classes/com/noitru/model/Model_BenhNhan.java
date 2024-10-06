@@ -1,7 +1,5 @@
 package com.noitru.model;
 
-import java.sql.Date;
-
 public class Model_BenhNhan {
 
     private String MaBN;
@@ -13,7 +11,8 @@ public class Model_BenhNhan {
     private String BHYT;
     private String DienThoai;
 
-    public Model_BenhNhan(String MaBN, String TenBN, String NgaySinh, String GioiTinh, String CCCD, String DiaChi, String BHYT, String DienThoai) {
+    public Model_BenhNhan(String MaBN, String TenBN, String NgaySinh, String GioiTinh, String CCCD, String DiaChi,
+            String BHYT, String DienThoai) {
         this.MaBN = MaBN;
         this.TenBN = TenBN;
         this.NgaySinh = NgaySinh;

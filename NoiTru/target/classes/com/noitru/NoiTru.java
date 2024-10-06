@@ -1,8 +1,8 @@
 package com.noitru;
 
+import com.noitru.model.Model_BacSi;
 import com.noitru.model.Model_BenhNhan;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -26,6 +26,116 @@ public class NoiTru {
         System.out.println("Hello World!");
     }
 
+    private static Model_BacSi mapResultSetToBacSi(ResultSet rs) throws SQLException {
+        String Ma = rs.getString("MaBS");
+        String Ten = rs.getString("TenBS");
+        String KinhNghiem = rs.getString("KinhNghiem");
+        String ChuyenKhoa = rs.getString("ChuyenKhoa");
+        return new Model_BacSi(Ma, Ten, KinhNghiem, ChuyenKhoa);
+    }
+
+    public static List<Model_BacSi> timKiemTheoMaBS(String MaBS) {
+        List<Model_BacSi> bacSiListTk = new ArrayList<>();
+        try {
+            Connection conn = connect();
+            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM `bacsi` WHERE MaBS LIKE ?");
+            stmt.setString(1, "%" + MaBS + "%");
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                bacSiListTk.add(mapResultSetToBacSi(rs));
+            }
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        }
+        return bacSiListTk;
+    }
+
+    public static List<Model_BacSi> timKiemTheoTenBS(String TenBS) {
+        List<Model_BacSi> bacSiListTk = new ArrayList<>();
+        try {
+            Connection conn = connect();
+            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM `bacsi` WHERE TenBS LIKE ?");
+            stmt.setString(1, "%" + TenBS + "%");
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                bacSiListTk.add(mapResultSetToBacSi(rs));
+            }
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        }
+        return bacSiListTk;
+    }
+
+    public static void xoaBacSi(String MaBS) {
+        try (Connection conn = connect(); PreparedStatement stmt = conn.prepareStatement("DELETE FROM `bacsi` WHERE MaBS = ?")) {
+            stmt.setString(1, MaBS);
+            stmt.executeUpdate();
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static List<String> getAllChuyenKhoa() {
+        List<String> chuyenKhoaList = new ArrayList<>();
+        try (Connection conn = connect(); PreparedStatement stmt = conn.prepareStatement("SELECT ChuyenKhoa FROM `bacsi` GROUP BY ChuyenKhoa")) {
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                String ChuyenKhoa = rs.getString("ChuyenKhoa");
+                chuyenKhoaList.add(ChuyenKhoa);
+            }
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        }
+        return chuyenKhoaList;
+    }
+
+    public static List<Model_BacSi> getAllBacSi() {
+        List<Model_BacSi> bacSiList = new ArrayList<>();
+        try (Connection conn = connect(); PreparedStatement stmt = conn.prepareStatement("SELECT * FROM `bacsi`")) {
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                String MaBS = rs.getString("MaBS");
+                String TenBS = rs.getString("TenBS");
+                String KinhNghiem = rs.getString("KinhNghiem");
+                String ChuyenKhoa = rs.getString("ChuyenKhoa");
+                Model_BacSi bacSi = new Model_BacSi(MaBS, TenBS, KinhNghiem, ChuyenKhoa);
+                bacSiList.add(bacSi);
+            }
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        }
+        return bacSiList;
+    }
+
+    public static void addBacSi(String MaBS, String TenBS, String KinhNghiem, String ChuyenKhoa) {
+        try (Connection conn = connect(); PreparedStatement stmt = conn.prepareStatement(
+                "INSERT INTO bacsi (MaBS, TenBS, KinhNghiem, ChuyenKhoa) "
+                + "VALUES (?, ?, ?, ?)")) {
+            stmt.setString(1, MaBS);
+            stmt.setString(2, TenBS);
+            stmt.setString(3, KinhNghiem);
+            stmt.setString(4, ChuyenKhoa);
+            stmt.executeUpdate();
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void suaBacSi(String MaBS, String TenBS, String KinhNghiem, String ChuyenKhoa) {
+        try {
+            Connection conn = connect();
+            PreparedStatement stmt = conn.prepareStatement(
+                    "UPDATE bacsi SET TenBS = ?, KinhNghiem = ?, ChuyenKhoa = ? WHERE MaBS = ?");
+            stmt.setString(1, TenBS);
+            stmt.setString(2, KinhNghiem);
+            stmt.setString(3, ChuyenKhoa);
+            stmt.setString(4, MaBS);
+            stmt.executeUpdate();
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     public static List<Model_BenhNhan> getAllBenhNhan() {
         List<Model_BenhNhan> benhNhanList = new ArrayList<>();
         try (Connection conn = connect(); PreparedStatement stmt = conn.prepareStatement("SELECT * FROM `benhnhan`")) {
@@ -39,7 +149,8 @@ public class NoiTru {
                 String DiaChi = rs.getString("DiaChi");
                 String BHYT = rs.getString("BHYT");
                 String DienThoai = rs.getString("DienThoai");
-                Model_BenhNhan benhNhan = new Model_BenhNhan(MaBN, TenBN, NgaySinh, GioiTinh, CCCD, DiaChi, BHYT, DienThoai);
+                Model_BenhNhan benhNhan = new Model_BenhNhan(MaBN, TenBN, NgaySinh, GioiTinh, CCCD, DiaChi, BHYT,
+                        DienThoai);
                 benhNhanList.add(benhNhan);
             }
         } catch (ClassNotFoundException | SQLException e) {
@@ -48,10 +159,12 @@ public class NoiTru {
         return benhNhanList;
     }
 
-    public static void suaBenhNhan(String MaBN, String TenBN, String NgaySinh, String GioiTinh, String CCCD, String DiaChi, String BHYT, String DienThoai) {
+    public static void suaBenhNhan(String MaBN, String TenBN, String NgaySinh, String GioiTinh, String CCCD,
+            String DiaChi, String BHYT, String DienThoai) {
         try {
             Connection conn = connect();
-            PreparedStatement stmt = conn.prepareStatement("UPDATE benhnhan SET TenBN = ?, NgaySinh = ?, GioiTinh = ?, CCCD = ?, DiaChi = ?, BHYT = ?, DienThoai = ? WHERE MaBN = ?");
+            PreparedStatement stmt = conn.prepareStatement(
+                    "UPDATE benhnhan SET TenBN = ?, NgaySinh = ?, GioiTinh = ?, CCCD = ?, DiaChi = ?, BHYT = ?, DienThoai = ? WHERE MaBN = ?");
             stmt.setString(1, TenBN);
             stmt.setString(2, NgaySinh);
             stmt.setString(3, GioiTinh);
@@ -126,8 +239,10 @@ public class NoiTru {
         return benhNhanListTk;
     }
 
-    public static void addBenhNhan(String MaBN, String TenBN, String NgaySinh, String GioiTinh, String CCCD, String DiaChi, String BHYT, String DienThoai) {
-        try (Connection conn = connect(); PreparedStatement stmt = conn.prepareStatement("INSERT INTO benhnhan (MaBN, TenBN, NgaySinh, GioiTinh, CCCD, DiaChi, BHYT, DienThoai) "
+    public static void addBenhNhan(String MaBN, String TenBN, String NgaySinh, String GioiTinh, String CCCD,
+            String DiaChi, String BHYT, String DienThoai) {
+        try (Connection conn = connect(); PreparedStatement stmt = conn.prepareStatement(
+                "INSERT INTO benhnhan (MaBN, TenBN, NgaySinh, GioiTinh, CCCD, DiaChi, BHYT, DienThoai) "
                 + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)")) {
             stmt.setString(1, MaBN);
             stmt.setString(2, TenBN);
