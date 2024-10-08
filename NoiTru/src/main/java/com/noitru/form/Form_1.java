@@ -209,11 +209,6 @@ public class Form_1 extends javax.swing.JPanel {
 
         timKiemBsEdt.setBackground(new java.awt.Color(255, 255, 255));
         timKiemBsEdt.setForeground(new java.awt.Color(80, 80, 80));
-        timKiemBsEdt.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                timKiemBsEdtKeyReleased(evt);
-            }
-        });
 
         javax.swing.GroupLayout panelBorder5Layout = new javax.swing.GroupLayout(panelBorder5);
         panelBorder5.setLayout(panelBorder5Layout);
@@ -330,36 +325,6 @@ public class Form_1 extends javax.swing.JPanel {
                         .addGap(114, 114, 114))))
         );
     }// </editor-fold>//GEN-END:initComponents
-
-    private void timKiemBsEdtKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_timKiemBsEdtKeyReleased
-        if (timKiemBsEdt.isSelected()) {
-            int option = timKiemBsEdt.getSelectedIndex();
-            String text = timKiemBsEdt.getText().trim();
-            if (option == 0) {
-                ((DefaultTableModel) bsTable.getModel()).setRowCount(0);
-                SwingUtilities.invokeLater(() -> {
-                    List<Model_BacSi> bacSiListTK = NoiTru.timKiemTheoMaBS(text);
-                    for (Model_BacSi bacSi : bacSiListTK) {
-                        Object[] row = {bacSi.getMaBS(), bacSi.getTenBS(),
-                            bacSi.getKinhNghiem(),
-                            bacSi.getChuyenKhoa(),};
-                        bsTable.addRow(row);
-                    }
-                });
-            } else if (option == 1) {
-                ((DefaultTableModel) bsTable.getModel()).setRowCount(0);
-                SwingUtilities.invokeLater(() -> {
-                    List<Model_BacSi> bacSiListTK = NoiTru.timKiemTheoTenBS(text);
-                    for (Model_BacSi bacSi : bacSiListTK) {
-                        Object[] row = {bacSi.getMaBS(), bacSi.getTenBS(),
-                            bacSi.getKinhNghiem(),
-                            bacSi.getChuyenKhoa(),};
-                        bsTable.addRow(row);
-                    }
-                });
-            }
-        }
-    }//GEN-LAST:event_timKiemBsEdtKeyReleased
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.noitru.swing.Button SuaBsBtn;
