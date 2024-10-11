@@ -35,7 +35,7 @@ public class TextFeild extends JTextField {
         createImageShadow();
         repaint();
     }
-    private String hint = "Search here ...";
+    private String hint = "...";
 
     public void setHint(String text) {
         this.hint = text;
@@ -125,9 +125,16 @@ public class TextFeild extends JTextField {
         }
     }
 
+    @Override
+    public void setEnabled(boolean enabled) {
+        super.setEnabled(enabled); // Gọi phương thức gốc để giữ hành vi chuẩn
+        setForeground(enabled ? new Color(80, 80, 80) : Color.GRAY); // Đổi màu văn bản nếu cần
+        setBackground(enabled ? Color.WHITE : new Color(240, 240, 240)); // Đổi màu nền nếu cần
+        repaint(); // Vẽ lại giao diện để cập nhật
+    }
+
     private class TextUI extends BasicTextFieldUI {
 
-        //  Override this method to remove background or not paint background
         @Override
         protected void paintBackground(Graphics grphcs) {
 

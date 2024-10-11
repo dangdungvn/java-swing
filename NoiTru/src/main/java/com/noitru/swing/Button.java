@@ -110,4 +110,12 @@ public class Button extends JButton {
             return null;
         }
     }
+
+    @Override
+    public void setEnabled(boolean enabled) {
+        super.setEnabled(enabled); // Gọi phương thức gốc để giữ hành vi chuẩn
+        setForeground(enabled ? new Color(80, 80, 80) : Color.GRAY); // Đổi màu văn bản nếu cần
+        setBackground(enabled ? Color.WHITE : new Color(240, 240, 240)); // Đổi màu nền nếu cần
+        repaint(); // Vẽ lại giao diện để cập nhật
+    }
 }

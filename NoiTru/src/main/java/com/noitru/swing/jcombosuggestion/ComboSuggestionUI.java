@@ -80,24 +80,21 @@ public class ComboSuggestionUI extends BasicComboBoxUI {
 
     @Override
     protected ListCellRenderer createRenderer() {
-        return new ListCellRenderer() {
-            @Override
-            public Component getListCellRendererComponent(JList jlist, Object e, int i, boolean bln, boolean bln1) {
-                String text = e == null ? "" : e.toString();
-                JLabel label = new JLabel(text);
-                label.setFont(comboBox.getFont());
-                if (i >= 0) {
-                    label.setBorder(new EmptyBorder(5, 8, 5, 8));
-                } else {
-                    label.setBorder(null);
-                }
-                if (bln) {
-                    label.setOpaque(true);
-                    label.setBackground(new Color(240, 240, 240));
-                    label.setForeground(new Color(17, 155, 215));
-                }
-                return label;
+        return (ListCellRenderer) (JList jlist, Object e, int i, boolean bln, boolean bln1) -> {
+            String text = e == null ? "" : e.toString();
+            JLabel label = new JLabel(text);
+            label.setFont(comboBox.getFont());
+            if (i >= 0) {
+                label.setBorder(new EmptyBorder(5, 8, 5, 8));
+            } else {
+                label.setBorder(null);
             }
+            if (bln) {
+                label.setOpaque(true);
+                label.setBackground(new Color(240, 240, 240));
+                label.setForeground(new Color(17, 155, 215));
+            }
+            return label;
         };
     }
 
