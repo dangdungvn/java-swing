@@ -15,6 +15,9 @@ import javax.swing.border.EmptyBorder;
 
 public class Button extends JButton {
 
+    private Color originalForeground;
+    private Color originalBackground;
+
     public int getRound() {
         return round;
     }
@@ -113,9 +116,13 @@ public class Button extends JButton {
 
     @Override
     public void setEnabled(boolean enabled) {
+        if (enabled && originalForeground == null) {
+            originalForeground = getForeground();
+            originalBackground = getBackground();
+        }
         super.setEnabled(enabled); // Gọi phương thức gốc để giữ hành vi chuẩn
-        setForeground(enabled ? new Color(80, 80, 80) : Color.GRAY); // Đổi màu văn bản nếu cần
-        setBackground(enabled ? Color.WHITE : new Color(240, 240, 240)); // Đổi màu nền nếu cần
+        setForeground(enabled ? originalForeground : Color.GRAY); // Đổi màu văn bản nếu cần
+        setBackground(enabled ? originalBackground : new Color(240, 240, 240)); // Đổi màu nền nếu cần
         repaint(); // Vẽ lại giao diện để cập nhật
     }
 }

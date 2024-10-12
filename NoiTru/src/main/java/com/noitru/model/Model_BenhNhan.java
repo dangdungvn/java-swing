@@ -10,9 +10,18 @@ public class Model_BenhNhan {
     private String DiaChi;
     private String BHYT;
     private String DienThoai;
+    private String TinhTrang;
+
+    public String getTinhTrang() {
+        return TinhTrang;
+    }
+
+    public void setTinhTrang(String TinhTrang) {
+        this.TinhTrang = TinhTrang;
+    }
 
     public Model_BenhNhan(String MaBN, String TenBN, String NgaySinh, String GioiTinh, String CCCD, String DiaChi,
-            String BHYT, String DienThoai) {
+            String BHYT, String DienThoai, String TinhTrang) {
         this.MaBN = MaBN;
         this.TenBN = TenBN;
         this.NgaySinh = NgaySinh;
@@ -21,6 +30,7 @@ public class Model_BenhNhan {
         this.DiaChi = DiaChi;
         this.BHYT = BHYT;
         this.DienThoai = DienThoai;
+        this.TinhTrang = TinhTrang;
     }
 
     public Model_BenhNhan() {

@@ -10,6 +10,18 @@ import java.util.List;
 
 public class BenhNhan {
 
+    public static void suaBenhNhanTheoTinhTrang(String MaBN, String TinhTrang) {
+        try {
+            Connection conn = ConnectDB.connect();
+            PreparedStatement stmt = conn.prepareStatement(
+                    "UPDATE benhnhan SET TinhTrang = ? WHERE MaBN = ?");
+            stmt.setString(1, TinhTrang);
+            stmt.setString(2, MaBN);
+            stmt.executeUpdate();
+        } catch (ClassNotFoundException | SQLException e) {
+        }
+    }
+
     public static List<Model_BenhNhan> getAllBenhNhan() {
         List<Model_BenhNhan> benhNhanList = new ArrayList<>();
         try (Connection conn = ConnectDB.connect(); PreparedStatement stmt = conn.prepareStatement("SELECT * FROM `benhnhan`")) {
@@ -23,8 +35,9 @@ public class BenhNhan {
                 String DiaChi = rs.getString("DiaChi");
                 String BHYT = rs.getString("BHYT");
                 String DienThoai = rs.getString("DienThoai");
+                String TinhTrang = rs.getString("TinhTrang");
                 Model_BenhNhan benhNhan = new Model_BenhNhan(MaBN, TenBN, NgaySinh, GioiTinh, CCCD, DiaChi, BHYT,
-                        DienThoai);
+                        DienThoai, TinhTrang);
                 benhNhanList.add(benhNhan);
             }
         } catch (ClassNotFoundException | SQLException e) {
@@ -33,11 +46,11 @@ public class BenhNhan {
     }
 
     public static void suaBenhNhan(String MaBN, String TenBN, String NgaySinh, String GioiTinh, String CCCD,
-            String DiaChi, String BHYT, String DienThoai) {
+            String DiaChi, String BHYT, String DienThoai, String TinhTrang) {
         try {
             Connection conn = ConnectDB.connect();
             PreparedStatement stmt = conn.prepareStatement(
-                    "UPDATE benhnhan SET TenBN = ?, NgaySinh = ?, GioiTinh = ?, CCCD = ?, DiaChi = ?, BHYT = ?, DienThoai = ? WHERE MaBN = ?");
+                    "UPDATE benhnhan SET TenBN = ?, NgaySinh = ?, GioiTinh = ?, CCCD = ?, DiaChi = ?, BHYT = ?, DienThoai = ?,TinhTrang = ? WHERE MaBN = ?");
             stmt.setString(1, TenBN);
             stmt.setString(2, NgaySinh);
             stmt.setString(3, GioiTinh);
@@ -45,7 +58,8 @@ public class BenhNhan {
             stmt.setString(5, DiaChi);
             stmt.setString(6, BHYT);
             stmt.setString(7, DienThoai);
-            stmt.setString(8, MaBN);
+            stmt.setString(8, TinhTrang);
+            stmt.setString(9, MaBN);
             stmt.executeUpdate();
         } catch (ClassNotFoundException | SQLException e) {
         }
@@ -60,7 +74,8 @@ public class BenhNhan {
         String BHYT = rs.getString("BHYT");
         String DiaChi = rs.getString("DiaChi");
         String DienThoai = rs.getString("DienThoai");
-        return new Model_BenhNhan(Ma, Ten, Ngay, GioiTinh, CCCD, BHYT, DiaChi, DienThoai);
+        String TinhTrang = rs.getString("TinhTrang");
+        return new Model_BenhNhan(Ma, Ten, Ngay, GioiTinh, CCCD, BHYT, DiaChi, DienThoai, TinhTrang);
     }
 
     public static List<Model_BenhNhan> timKiemTheoMaBN(String MaBN) {
@@ -109,10 +124,10 @@ public class BenhNhan {
     }
 
     public static void addBenhNhan(String MaBN, String TenBN, String NgaySinh, String GioiTinh, String CCCD,
-            String DiaChi, String BHYT, String DienThoai) {
+            String DiaChi, String BHYT, String DienThoai, String TinhTrang) {
         try (Connection conn = ConnectDB.connect(); PreparedStatement stmt = conn.prepareStatement(
-                "INSERT INTO benhnhan (MaBN, TenBN, NgaySinh, GioiTinh, CCCD, DiaChi, BHYT, DienThoai) "
-                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)")) {
+                "INSERT INTO benhnhan (MaBN, TenBN, NgaySinh, GioiTinh, CCCD, DiaChi, BHYT, DienThoai, TinhTrang) "
+                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)")) {
             stmt.setString(1, MaBN);
             stmt.setString(2, TenBN);
             stmt.setString(3, NgaySinh);
@@ -121,6 +136,7 @@ public class BenhNhan {
             stmt.setString(6, DiaChi);
             stmt.setString(7, BHYT);
             stmt.setString(8, DienThoai);
+            stmt.setString(9, TinhTrang);
             stmt.executeUpdate();
         } catch (ClassNotFoundException | SQLException e) {
         }

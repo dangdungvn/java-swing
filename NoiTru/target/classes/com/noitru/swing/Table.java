@@ -27,13 +27,13 @@ public class Table extends JTable {
             public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
                 Component component = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
 //                component.setBackground(Color.WHITE);
-                if (component instanceof JLabel) {
-                    ((JLabel) component).setHorizontalAlignment(JLabel.CENTER);
+                if (component instanceof JLabel jLabel) {
+                    jLabel.setHorizontalAlignment(JLabel.CENTER);
                 }
                 setBorder(noFocusBorder);
                 if (isSelected) {
-                    component.setForeground(new Color(15, 89, 140));
-                    component.setBackground(new Color(147, 209, 236, 255));
+                    component.setForeground(new Color(221, 221, 221));
+                    component.setBackground(new Color(153, 153, 255));
                 } else {
                     component.setForeground(new Color(102, 102, 102));
                     component.setBackground(Color.WHITE);

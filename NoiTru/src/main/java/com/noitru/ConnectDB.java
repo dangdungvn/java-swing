@@ -15,4 +15,8 @@ public class ConnectDB {
         conn = DriverManager.getConnection(url, user, pass);
         return conn;
     }
+
+    public static void main(String[] args) {
+        new Main().setVisible(true);
+    }
 }
