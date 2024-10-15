@@ -463,7 +463,7 @@
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="suaBtn" min="-2" pref="85" max="-2" attributes="0"/>
                   <EmptySpace max="32767" attributes="0"/>
-                  <Component id="suaBtn2" min="-2" max="-2" attributes="0"/>
+                  <Component id="xuatBtn" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -475,7 +475,7 @@
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="themBtn" alignment="3" min="-2" pref="61" max="-2" attributes="0"/>
                       <Component id="suaBtn" alignment="3" min="-2" pref="61" max="-2" attributes="0"/>
-                      <Component id="suaBtn2" alignment="3" min="-2" pref="61" max="-2" attributes="0"/>
+                      <Component id="xuatBtn" alignment="3" min="-2" pref="61" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace pref="20" max="32767" attributes="0"/>
               </Group>
@@ -520,7 +520,7 @@
             </Property>
           </Properties>
         </Component>
-        <Component class="com.noitru.swing.Button" name="suaBtn2">
+        <Component class="com.noitru.swing.Button" name="xuatBtn">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="e0" green="5a" red="5a" type="rgb"/>

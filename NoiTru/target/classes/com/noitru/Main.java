@@ -1,10 +1,12 @@
 package com.noitru;
 
-import com.noitru.form.Form_1;
+import com.noitru.form.Form_BacSi;
 import com.noitru.form.Form_2;
 import com.noitru.form.Form_3;
 import com.noitru.form.Form_4;
 import com.noitru.form.Form_5;
+import com.noitru.form.Form_6;
+import com.noitru.form.Form_7;
 import com.noitru.form.Form_Home;
 import java.awt.Color;
 import javax.swing.JComponent;
@@ -20,7 +22,7 @@ public class Main extends javax.swing.JFrame {
                 case 0 ->
                     setForm(new Form_Home());
                 case 1 ->
-                    setForm(new Form_1());
+                    setForm(new Form_BacSi());
                 case 2 ->
                     setForm(new Form_2());
                 case 3 ->
@@ -29,6 +31,10 @@ public class Main extends javax.swing.JFrame {
                     setForm(new Form_4());
                 case 8 ->
                     setForm(new Form_5());
+                case 9 ->
+                    setForm(new Form_6());
+                case 10 ->
+                    setForm(new Form_7());
                 default -> {
                 }
             }

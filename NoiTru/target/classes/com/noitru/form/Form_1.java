@@ -1,21 +1,49 @@
+
 package com.noitru.form;
 
+
 import com.noitru.BacSi;
+import com.noitru.ConnectDB;
 import com.noitru.component.CheckLoi;
 import com.noitru.model.Model_BacSi;
 import com.noitru.swing.ScrollBar;
 import com.noitru.swing.search.SearchOption;
 import java.awt.Color;
 import java.awt.HeadlessException;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.ImageIcon;
+import org.apache.poi.ss.usermodel.BorderStyle;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.CellType;
+import org.apache.poi.ss.usermodel.CreationHelper;
+import org.apache.poi.ss.usermodel.FillPatternType;
+import org.apache.poi.ss.usermodel.Font;
+import org.apache.poi.ss.usermodel.HorizontalAlignment;
+import org.apache.poi.ss.usermodel.IndexedColors;
+import org.apache.poi.ss.usermodel.VerticalAlignment;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
 
 public class Form_1 extends javax.swing.JPanel {
 
@@ -37,6 +65,7 @@ public class Form_1 extends javax.swing.JPanel {
         cbData();
         xoaData();
         timKiemData();
+        xuatData();
     }
 
     @SuppressWarnings("unchecked")
@@ -45,6 +74,99 @@ public class Form_1 extends javax.swing.JPanel {
         for (String item : data) {
             chuyenkhoaCb.addItem(item);
         }
+    }
+
+    private void xuatData() {
+        xuatEdt.addActionListener((ActionEvent e) -> {
+            try {
+                XSSFWorkbook workbook = new XSSFWorkbook();
+                XSSFSheet spreadsheet = workbook.createSheet("bacsi");
+                // register the columns you wish to track and compute the column width
+                CreationHelper createHelper = workbook.getCreationHelper();
+                XSSFRow row = null;
+                Cell cell = null;
+                row = spreadsheet.createRow((short) 2);
+                row.setHeight((short) 500);
+                cell = row.createCell(0, CellType.STRING);
+                cell.setCellValue("DANH SÁCH BÁC SĨ");
+
+                //Tạo dòng tiêu đều của bảng
+                // create CellStyle
+                CellStyle cellStyle_Head = ConnectDB.DinhdangHeader(spreadsheet);
+                row = spreadsheet.createRow((short) 3);
+                row.setHeight((short) 500);
+                cell = row.createCell(0, CellType.STRING);
+                cell.setCellStyle(cellStyle_Head);
+                cell.setCellValue("STT");
+
+                cell = row.createCell(1, CellType.STRING);
+                cell.setCellStyle(cellStyle_Head);
+                cell.setCellValue("Mã Bác Sĩ");
+
+                cell = row.createCell(2, CellType.STRING);
+                cell.setCellStyle(cellStyle_Head);
+                cell.setCellValue("Tên Bác Sĩ");
+
+                cell = row.createCell(3, CellType.STRING);
+                cell.setCellStyle(cellStyle_Head);
+                cell.setCellValue("Kinh Nghiệm");
+
+                cell = row.createCell(4, CellType.STRING);
+                cell.setCellStyle(cellStyle_Head);
+                cell.setCellValue("Chuyên Khoa");
+
+                //Kết nối DB
+                Connection con = ConnectDB.connect();
+                String sql = "Select * From Tacgia";
+                PreparedStatement st = con.prepareStatement(sql);
+                ResultSet rs = st.executeQuery();
+                //Đổ dữ liệu từ rs vào các ô trong excel
+                ResultSetMetaData rsmd = rs.getMetaData();
+                int tongsocot = rsmd.getColumnCount();
+
+                //Đinh dạng Tạo đường kẻ cho ô chứa dữ liệu
+                CellStyle cellStyle_data = spreadsheet.getWorkbook().createCellStyle();
+                cellStyle_data.setBorderLeft(BorderStyle.THIN);
+                cellStyle_data.setBorderRight(BorderStyle.THIN);
+                cellStyle_data.setBorderBottom(BorderStyle.THIN);
+                int i = 0;
+                while (rs.next()) {
+                    row = spreadsheet.createRow((short) 4 + i);
+                    row.setHeight((short) 400);
+
+                    cell = row.createCell(0);
+                    cell.setCellStyle(cellStyle_data);
+                    cell.setCellValue(i + 1);
+
+                    cell = row.createCell(1);
+                    cell.setCellStyle(cellStyle_data);
+                    cell.setCellValue(rs.getString("MaBS"));
+
+                    cell = row.createCell(2);
+                    cell.setCellStyle(cellStyle_data);
+                    cell.setCellValue(rs.getString("TenBS"));
+
+                    //Định dạng ngày tháng trong excel
+                    cell = row.createCell(3);
+                    cell.setCellStyle(cellStyle_data);
+                    cell.setCellValue(rs.getString("KinhNghiem"));
+
+                    cell = row.createCell(4);
+                    cell.setCellStyle(cellStyle_data);
+                    cell.setCellValue(rs.getString("ChuyenKhoa"));
+                    i++;
+                }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+            } catch (SQLException ex) {
+                Logger.getLogger(Form_1.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(Form_1.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        });
+
     }
 
     private void timKiemData() {
@@ -194,7 +316,7 @@ public class Form_1 extends javax.swing.JPanel {
         themBsBtn = new com.noitru.swing.Button();
         suaBsBtn = new com.noitru.swing.Button();
         suaBtn1 = new com.noitru.swing.Button();
-        suaBtn2 = new com.noitru.swing.Button();
+        xuatEdt = new com.noitru.swing.Button();
         mbsEdt = new com.noitru.swing.TextFeild();
         tbsEdt = new com.noitru.swing.TextFeild();
         chuyenkhoaCb = new com.noitru.swing.jcombosuggestion.ComboBoxSuggestion();
@@ -233,11 +355,11 @@ public class Form_1 extends javax.swing.JPanel {
         suaBtn1.setText("Reset");
         suaBtn1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
 
-        suaBtn2.setBackground(new java.awt.Color(90, 90, 224));
-        suaBtn2.setForeground(new java.awt.Color(255, 255, 255));
-        suaBtn2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/noitru/icon/up-arrow.png"))); // NOI18N
-        suaBtn2.setText("Xuất Excel");
-        suaBtn2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        xuatEdt.setBackground(new java.awt.Color(90, 90, 224));
+        xuatEdt.setForeground(new java.awt.Color(255, 255, 255));
+        xuatEdt.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/noitru/icon/up-arrow.png"))); // NOI18N
+        xuatEdt.setText("Xuất Excel");
+        xuatEdt.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
 
         javax.swing.GroupLayout panelBorder2Layout = new javax.swing.GroupLayout(panelBorder2);
         panelBorder2.setLayout(panelBorder2Layout);
@@ -251,7 +373,7 @@ public class Form_1 extends javax.swing.JPanel {
                 .addGap(20, 20, 20)
                 .addComponent(suaBtn1, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(suaBtn2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(xuatEdt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         panelBorder2Layout.setVerticalGroup(
@@ -262,7 +384,7 @@ public class Form_1 extends javax.swing.JPanel {
                     .addComponent(themBsBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(suaBsBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(suaBtn1, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(suaBtn2, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(xuatEdt, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(15, Short.MAX_VALUE))
         );
 
@@ -420,9 +542,9 @@ public class Form_1 extends javax.swing.JPanel {
     private javax.swing.JScrollPane spTable4;
     private com.noitru.swing.Button suaBsBtn;
     private com.noitru.swing.Button suaBtn1;
-    private com.noitru.swing.Button suaBtn2;
     private com.noitru.swing.TextFeild tbsEdt;
     private com.noitru.swing.Button themBsBtn;
     private com.noitru.swing.search.TextFieldSearchOption timKiemBsEdt;
+    private com.noitru.swing.Button xuatEdt;
     // End of variables declaration//GEN-END:variables
 }

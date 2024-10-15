@@ -5,10 +5,11 @@ C:\Users\Admin\Documents\NetBeansProjects\java-swing\NoiTru\src\main\java\com\no
 C:\Users\Admin\Documents\NetBeansProjects\java-swing\NoiTru\src\main\java\com\noitru\form\Form_6.java
 C:\Users\Admin\Documents\NetBeansProjects\java-swing\NoiTru\src\main\java\com\noitru\swing\jdatechooser\Slider.java
 C:\Users\Admin\Documents\NetBeansProjects\java-swing\NoiTru\src\main\java\com\noitru\form\Form_7.java
-C:\Users\Admin\Documents\NetBeansProjects\java-swing\NoiTru\src\main\java\com\noitru\form\Form_1.java
 C:\Users\Admin\Documents\NetBeansProjects\java-swing\NoiTru\src\main\java\com\noitru\swing\search\SearchOption.java
+C:\Users\Admin\Documents\NetBeansProjects\java-swing\NoiTru\src\main\java\com\noitru\model\Model_BaoCao.java
 C:\Users\Admin\Documents\NetBeansProjects\java-swing\NoiTru\src\main\java\com\noitru\ConnectDB.java
 C:\Users\Admin\Documents\NetBeansProjects\java-swing\NoiTru\src\main\java\com\noitru\swing\jdatechooser\Event.java
+C:\Users\Admin\Documents\NetBeansProjects\java-swing\NoiTru\src\main\java\com\noitru\form\Form_BacSi.java
 C:\Users\Admin\Documents\NetBeansProjects\java-swing\NoiTru\src\main\java\com\noitru\swing\PanelBorder.java
 C:\Users\Admin\Documents\NetBeansProjects\java-swing\NoiTru\src\main\java\com\noitru\swing\jdatechooser\DateChooser.java
 C:\Users\Admin\Documents\NetBeansProjects\java-swing\NoiTru\src\main\java\com\noitru\swing\shadow\ShadowRenderer.java
@@ -17,9 +18,10 @@ C:\Users\Admin\Documents\NetBeansProjects\java-swing\NoiTru\src\main\java\com\no
 C:\Users\Admin\Documents\NetBeansProjects\java-swing\NoiTru\src\main\java\com\noitru\component\Menu.java
 C:\Users\Admin\Documents\NetBeansProjects\java-swing\NoiTru\src\main\java\com\noitru\component\CheckLoi.java
 C:\Users\Admin\Documents\NetBeansProjects\java-swing\NoiTru\src\main\java\com\noitru\event\EventMenuSelected.java
+C:\Users\Admin\Documents\NetBeansProjects\java-swing\NoiTru\src\main\java\com\noitru\model\Model_DieuTri.java
+C:\Users\Admin\Documents\NetBeansProjects\java-swing\NoiTru\src\main\java\com\noitru\DieuTri.java
 C:\Users\Admin\Documents\NetBeansProjects\java-swing\NoiTru\src\main\java\com\noitru\BenhNhan.java
 C:\Users\Admin\Documents\NetBeansProjects\java-swing\NoiTru\src\main\java\com\noitru\model\Model_GiuongBenh.java
-C:\Users\Admin\Documents\NetBeansProjects\java-swing\NoiTru\src\main\java\com\noitru\swing\Date.java
 C:\Users\Admin\Documents\NetBeansProjects\java-swing\NoiTru\src\main\java\com\noitru\swing\jcombosuggestion\ComboSuggestionUI.java
 C:\Users\Admin\Documents\NetBeansProjects\java-swing\NoiTru\src\main\java\com\noitru\swing\SearchText.java
 C:\Users\Admin\Documents\NetBeansProjects\java-swing\NoiTru\src\main\java\com\noitru\BacSi.java
@@ -40,6 +42,7 @@ C:\Users\Admin\Documents\NetBeansProjects\java-swing\NoiTru\src\main\java\com\no
 C:\Users\Admin\Documents\NetBeansProjects\java-swing\NoiTru\src\main\java\com\noitru\swing\search\TextFieldSearchOption.java
 C:\Users\Admin\Documents\NetBeansProjects\java-swing\NoiTru\src\main\java\com\noitru\swing\jdatechooser\Dates.java
 C:\Users\Admin\Documents\NetBeansProjects\java-swing\NoiTru\src\main\java\com\noitru\swing\shadow\GraphicsUtilities.java
+C:\Users\Admin\Documents\NetBeansProjects\java-swing\NoiTru\src\main\java\com\noitru\BaoCao.java
 C:\Users\Admin\Documents\NetBeansProjects\java-swing\NoiTru\src\main\java\com\noitru\model\Model_Menu.java
 C:\Users\Admin\Documents\NetBeansProjects\java-swing\NoiTru\src\main\java\com\noitru\swing\jdatechooser\EventDateChooser.java
 C:\Users\Admin\Documents\NetBeansProjects\java-swing\NoiTru\src\main\java\com\noitru\ThongTinKhamBenh.java

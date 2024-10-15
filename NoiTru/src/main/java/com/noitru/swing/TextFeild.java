@@ -38,6 +38,7 @@ public class TextFeild extends JTextField {
         createImageShadow();
         repaint();
     }
+
     private String hint = "...";
 
     public void setHint(String text) {
@@ -49,7 +50,8 @@ public class TextFeild extends JTextField {
         super.paint(g);
         if (getText().length() == 0) {
             int h = getHeight();
-            ((Graphics2D) g).setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+            ((Graphics2D) g).setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,
+                    RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
             Insets ins = getInsets();
             FontMetrics fm = g.getFontMetrics();
             int c0 = getBackground().getRGB();
@@ -60,6 +62,7 @@ public class TextFeild extends JTextField {
             g.drawString(hint, ins.left, h / 2 + fm.getAscent() / 2 - 2);
         }
     }
+
     private int round = 10;
     private Color shadowColor = new Color(170, 170, 170);
     private BufferedImage imageShadow;
@@ -83,9 +86,9 @@ public class TextFeild extends JTextField {
         double height = getHeight() - (shadowSize.top + shadowSize.bottom);
         double x = shadowSize.left;
         double y = shadowSize.top;
-        //  Create Shadow Image
+        // Create Shadow Image
         g2.drawImage(imageShadow, 0, 0, null);
-        //  Create Background Color
+        // Create Background Color
         g2.setColor(getBackground());
         Area area = new Area(new RoundRectangle2D.Double(x, y, width, height, round, round));
         g2.fill(area);
@@ -146,5 +149,10 @@ public class TextFeild extends JTextField {
         protected void paintBackground(Graphics grphcs) {
 
         }
+    }
+
+    public void setText(int soNgayNhapVien) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'setText'");
     }
 }

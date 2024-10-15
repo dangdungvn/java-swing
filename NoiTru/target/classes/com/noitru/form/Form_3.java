@@ -11,6 +11,10 @@ import java.awt.Color;
 
 import java.awt.event.ActionEvent;
 import com.noitru.model.Model_ThongTinKhamBenh;
+import java.awt.HeadlessException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import javax.swing.JOptionPane;
@@ -81,10 +85,10 @@ public class Form_3 extends javax.swing.JPanel {
                     dcEdt.setText(model_TenBenhNhan.getDiaChi());
                 }
             } else {
-                tbnEdt.setText("...");
+                tbnEdt.setText("");
                 gtCb.setSelectedIndex(0);
-                nsEdt.setText("...");
-                dcEdt.setText("...");
+                nsEdt.setText("");
+                dcEdt.setText("");
             }
         });
         mbsCb.addActionListener((ActionEvent e) -> {
@@ -105,6 +109,9 @@ public class Form_3 extends javax.swing.JPanel {
             try {
                 String MaBS = mbsCb.getSelectedItem().toString();
                 String NgayKham = nkEdt.getText().trim();
+                SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+                Date date = dateFormat.parse(NgayKham);
+                NgayKham = new SimpleDateFormat("yyyy-MM-dd").format(date);
                 String PhongKham = pkCb.getSelectedItem().toString();
                 String MaBN = mbnCb.getSelectedItem().toString();
                 String ChuyenKhoa = ckCb.getSelectedItem().toString();
@@ -112,16 +119,18 @@ public class Form_3 extends javax.swing.JPanel {
                 String NhomMau = nmCb.getSelectedItem().toString();
                 String NhietDo = ndEdt.getText().trim();
                 String Mach = mEdt.getText().trim();
-                String HuyetAp = haEdt.getText().trim();
+                String HuyetAp = tamTruongEdt.getText().trim() + "/" + tamNhiEdt.getText().trim();
                 String NhipTho = ntEdt.getText().trim();
                 String LyDoKham = ldkEdt.getText().trim();
                 String TinhTrangHienTai = tthtEdt.getText().trim();
                 String ChuanDoanSoBo = cdEdt.getText().trim();
                 int SoNgayNhapVien = Integer.parseInt(nnvEdt.getText().trim());
                 String HuongDieuTri = hdtEdt.getText().trim();
-                ThongTinKhamBenh.suaThongTin(MaBS, NgayKham, PhongKham, MaBN, ChuyenKhoa, CanNang, NhomMau, NhietDo,
-                        Mach, HuyetAp, NhipTho, LyDoKham, TinhTrangHienTai, ChuanDoanSoBo, SoNgayNhapVien,
-                        HuongDieuTri);
+                ThongTinKhamBenh.addThongTin(MaBS, NgayKham, PhongKham, MaBN,
+                        ChuyenKhoa, CanNang, NhomMau, NhietDo,
+                        Mach, HuyetAp, NhipTho, LyDoKham,
+                        TinhTrangHienTai, ChuanDoanSoBo, SoNgayNhapVien, HuongDieuTri);
+                JOptionPane.showMessageDialog(this, "Đã Add");
                 BenhNhan.suaBenhNhanTheoTinhTrang(MaBN, "Đã Khám");
                 loadDB();
                 mbnCb.setSelectedIndex(0);
@@ -131,7 +140,8 @@ public class Form_3 extends javax.swing.JPanel {
                 nmCb.setSelectedIndex(0);
                 ndEdt.setText("");
                 mEdt.setText("");
-                haEdt.setText("");
+                tamTruongEdt.setText("");
+                tamNhiEdt.setText("");
                 ntEdt.setText("");
                 ldkEdt.setText("");
                 tthtEdt.setText("");
@@ -141,7 +151,8 @@ public class Form_3 extends javax.swing.JPanel {
                 nsEdt.setText("");
                 tbnEdt.setText("");
                 dcEdt.setText("");
-            } catch (Exception ex) {
+            } catch (HeadlessException | NumberFormatException | ParseException ex) {
+                ex.printStackTrace();
             }
         });
     }
@@ -215,7 +226,7 @@ public class Form_3 extends javax.swing.JPanel {
         tthtEdt = new com.noitru.swing.TextFeild();
         jLabel15 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
-        haEdt = new com.noitru.swing.TextFeild();
+        tamTruongEdt = new com.noitru.swing.TextFeild();
         mbnCb = new com.noitru.swing.jcombosuggestion.ComboBoxSuggestion();
         jLabel25 = new javax.swing.JLabel();
         jLabel26 = new javax.swing.JLabel();
@@ -223,6 +234,8 @@ public class Form_3 extends javax.swing.JPanel {
         jLabel27 = new javax.swing.JLabel();
         jLabel28 = new javax.swing.JLabel();
         jLabel29 = new javax.swing.JLabel();
+        tamNhiEdt = new com.noitru.swing.TextFeild();
+        jLabel30 = new javax.swing.JLabel();
 
         dateChooser1.setTextRefernce(nsEdt);
 
@@ -377,13 +390,14 @@ public class Form_3 extends javax.swing.JPanel {
         jLabel17.setText("Phòng Khám");
 
         pkCb.setBackground(new java.awt.Color(248, 248, 255));
-        pkCb.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "--Chọn Phòng Khám--" }));
+        pkCb.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "--Chọn Phòng Khám--", "PK001", "PK002", "PK003", "PK004" }));
 
         jLabel19.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel19.setForeground(new java.awt.Color(255, 255, 255));
         jLabel19.setText("Chuyên Khoa");
 
         ckCb.setBackground(new java.awt.Color(248, 248, 255));
+        ckCb.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "--Chọn Chuyên Khoa--" }));
 
         javax.swing.GroupLayout panelBorder2Layout = new javax.swing.GroupLayout(panelBorder2);
         panelBorder2.setLayout(panelBorder2Layout);
@@ -513,7 +527,7 @@ public class Form_3 extends javax.swing.JPanel {
         jLabel16.setForeground(new java.awt.Color(255, 255, 255));
         jLabel16.setText("Mã BN");
 
-        haEdt.setShadowColor(new java.awt.Color(51, 51, 255));
+        tamTruongEdt.setShadowColor(new java.awt.Color(51, 51, 255));
 
         mbnCb.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "--Chọn Mã BN--" }));
 
@@ -538,6 +552,12 @@ public class Form_3 extends javax.swing.JPanel {
         jLabel29.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel29.setForeground(new java.awt.Color(255, 255, 255));
         jLabel29.setText("Lần/p");
+
+        tamNhiEdt.setShadowColor(new java.awt.Color(51, 51, 255));
+
+        jLabel30.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel30.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel30.setText("/");
 
         javax.swing.GroupLayout panelBorder1Layout = new javax.swing.GroupLayout(panelBorder1);
         panelBorder1.setLayout(panelBorder1Layout);
@@ -570,7 +590,6 @@ public class Form_3 extends javax.swing.JPanel {
                                 .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel7)
                                     .addComponent(jLabel10)
-                                    .addComponent(jLabel12)
                                     .addGroup(panelBorder1Layout.createSequentialGroup()
                                         .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                             .addComponent(ndEdt, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
@@ -580,10 +599,16 @@ public class Form_3 extends javax.swing.JPanel {
                                             .addComponent(jLabel25)
                                             .addComponent(jLabel26)))
                                     .addGroup(panelBorder1Layout.createSequentialGroup()
-                                        .addComponent(haEdt, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                            .addComponent(tamTruongEdt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jLabel30)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(tamNhiEdt, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(jLabel27)))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 76, Short.MAX_VALUE)
                                 .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel11)
                                     .addComponent(jLabel9)
@@ -671,8 +696,10 @@ public class Form_3 extends javax.swing.JPanel {
                             .addComponent(jLabel11))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(haEdt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel27))))
+                            .addComponent(tamTruongEdt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel27)
+                            .addComponent(tamNhiEdt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel30))))
                 .addGap(18, 18, 18)
                 .addComponent(jLabel13)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -731,7 +758,6 @@ public class Form_3 extends javax.swing.JPanel {
     private com.raven.datechooser.DateChooser dateChooser2;
     private com.noitru.swing.TextFeild dcEdt;
     private com.noitru.swing.jcombosuggestion.ComboBoxSuggestion gtCb;
-    private com.noitru.swing.TextFeild haEdt;
     private com.noitru.swing.TextFeild hdtEdt;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -756,6 +782,7 @@ public class Form_3 extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel30;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -780,6 +807,8 @@ public class Form_3 extends javax.swing.JPanel {
     private com.noitru.swing.jcombosuggestion.ComboBoxSuggestion pkCb;
     private javax.swing.JScrollPane spTable4;
     private com.noitru.swing.Table table;
+    private com.noitru.swing.TextFeild tamNhiEdt;
+    private com.noitru.swing.TextFeild tamTruongEdt;
     private com.noitru.swing.TextFeild tbnEdt;
     private com.noitru.swing.TextFeild tthtEdt;
     // End of variables declaration//GEN-END:variables

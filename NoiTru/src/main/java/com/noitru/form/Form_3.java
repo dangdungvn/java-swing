@@ -11,6 +11,10 @@ import java.awt.Color;
 
 import java.awt.event.ActionEvent;
 import com.noitru.model.Model_ThongTinKhamBenh;
+import java.awt.HeadlessException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import javax.swing.JOptionPane;
@@ -105,6 +109,9 @@ public class Form_3 extends javax.swing.JPanel {
             try {
                 String MaBS = mbsCb.getSelectedItem().toString();
                 String NgayKham = nkEdt.getText().trim();
+                SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+                Date date = dateFormat.parse(NgayKham);
+                NgayKham = new SimpleDateFormat("yyyy-MM-dd").format(date);
                 String PhongKham = pkCb.getSelectedItem().toString();
                 String MaBN = mbnCb.getSelectedItem().toString();
                 String ChuyenKhoa = ckCb.getSelectedItem().toString();
@@ -119,9 +126,11 @@ public class Form_3 extends javax.swing.JPanel {
                 String ChuanDoanSoBo = cdEdt.getText().trim();
                 int SoNgayNhapVien = Integer.parseInt(nnvEdt.getText().trim());
                 String HuongDieuTri = hdtEdt.getText().trim();
-                ThongTinKhamBenh.suaThongTin(MaBS, NgayKham, PhongKham, MaBN, ChuyenKhoa, CanNang, NhomMau, NhietDo,
-                        Mach, HuyetAp, NhipTho, LyDoKham, TinhTrangHienTai, ChuanDoanSoBo, SoNgayNhapVien,
-                        HuongDieuTri);
+                ThongTinKhamBenh.addThongTin(MaBS, NgayKham, PhongKham, MaBN,
+                        ChuyenKhoa, CanNang, NhomMau, NhietDo,
+                        Mach, HuyetAp, NhipTho, LyDoKham,
+                        TinhTrangHienTai, ChuanDoanSoBo, SoNgayNhapVien, HuongDieuTri);
+                JOptionPane.showMessageDialog(this, "Đã Add");
                 BenhNhan.suaBenhNhanTheoTinhTrang(MaBN, "Đã Khám");
                 loadDB();
                 mbnCb.setSelectedIndex(0);
@@ -142,7 +151,8 @@ public class Form_3 extends javax.swing.JPanel {
                 nsEdt.setText("");
                 tbnEdt.setText("");
                 dcEdt.setText("");
-            } catch (Exception ex) {
+            } catch (HeadlessException | NumberFormatException | ParseException ex) {
+                ex.printStackTrace();
             }
         });
     }
@@ -380,13 +390,14 @@ public class Form_3 extends javax.swing.JPanel {
         jLabel17.setText("Phòng Khám");
 
         pkCb.setBackground(new java.awt.Color(248, 248, 255));
-        pkCb.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "--Chọn Phòng Khám--" }));
+        pkCb.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "--Chọn Phòng Khám--", "PK001", "PK002", "PK003", "PK004" }));
 
         jLabel19.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel19.setForeground(new java.awt.Color(255, 255, 255));
         jLabel19.setText("Chuyên Khoa");
 
         ckCb.setBackground(new java.awt.Color(248, 248, 255));
+        ckCb.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "--Chọn Chuyên Khoa--" }));
 
         javax.swing.GroupLayout panelBorder2Layout = new javax.swing.GroupLayout(panelBorder2);
         panelBorder2.setLayout(panelBorder2Layout);

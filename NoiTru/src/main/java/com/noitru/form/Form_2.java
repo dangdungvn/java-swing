@@ -1,7 +1,10 @@
 package com.noitru.form;
 
-import com.noitru.*;
-import com.noitru.model.*;
+import com.noitru.BacSi;
+import com.noitru.GiuongBenh;
+import com.noitru.model.Model_BacSi;
+import com.noitru.model.Model_BenhNhan;
+import com.noitru.model.Model_GiuongBenh;
 import com.noitru.swing.ScrollBar;
 import com.noitru.swing.search.SearchOption;
 import java.awt.Color;

@@ -18,17 +18,7 @@ public class ThongTinKhamBenh {
                         .prepareStatement("SELECT * FROM `benhnhan` WHERE TinhTrang = 'Chờ Xét Nghiệm'")) {
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
-                String MaBN = rs.getString("MaBN");
-                String TenBN = rs.getString("TenBN");
-                String NgaySinh = rs.getString("NgaySinh");
-                String GioiTinh = rs.getString("GioiTinh");
-                String CCCD = rs.getString("CCCD");
-                String DiaChi = rs.getString("DiaChi");
-                String BHYT = rs.getString("BHYT");
-                String DienThoai = rs.getString("DienThoai");
-                String TinhTrang = rs.getString("TinhTrang");
-                Model_BenhNhan benhNhan = new Model_BenhNhan(MaBN, TenBN, NgaySinh, GioiTinh, CCCD, DiaChi, BHYT,
-                        DienThoai, TinhTrang);
+                Model_BenhNhan benhNhan = mapResultSetToBenhNhan(rs);
                 benhNhanList.add(benhNhan);
             }
         } catch (ClassNotFoundException | SQLException e) {
@@ -43,26 +33,7 @@ public class ThongTinKhamBenh {
                         .prepareStatement("SELECT * FROM `thongtinkhambenh`")) {
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
-                String MaBS = rs.getString("MaBS");
-                String NgayKham = rs.getString("NgayKham");
-                String PhongKham = rs.getString("PhongKham");
-                String MaBN = rs.getString("MaBN");
-                String ChuyenKhoa = rs.getString("ChuyenKhoa");
-                String CanNang = rs.getString("CanNang");
-                String NhomMau = rs.getString("NhomMau");
-                String NhietDo = rs.getString("NhietDo");
-                String Mach = rs.getString("Mach");
-                String HuyetAp = rs.getString("HuyetAp");
-                String NhipTho = rs.getString("NhipTho");
-                String LyDoKham = rs.getString("LyDoKham");
-                String TinhTrangHienTai = rs.getString("TinhTrangHienTai");
-                String ChuanDoanSoBo = rs.getString("ChuanDoanSoBo");
-                int SoNgayNhapVien = Integer.parseInt(rs.getString("SoNgayNhapVien"));
-                String HuongDieuTri = rs.getString("HuongDieuTri");
-                Model_ThongTinKhamBenh benhNhan = new Model_ThongTinKhamBenh(MaBS, NgayKham, PhongKham,
-                        MaBN, ChuyenKhoa, CanNang, NhomMau, NhietDo,
-                        Mach, HuyetAp, NhipTho, LyDoKham, TinhTrangHienTai,
-                        ChuanDoanSoBo, SoNgayNhapVien, HuongDieuTri);
+                Model_ThongTinKhamBenh benhNhan = mapResultSetToThongTinKhamBenh(rs);
                 benhNhanList.add(benhNhan);
             }
         } catch (ClassNotFoundException | SQLException e) {
@@ -77,7 +48,8 @@ public class ThongTinKhamBenh {
         try (Connection conn = ConnectDB.connect();
                 PreparedStatement stmt = conn
                         .prepareStatement(
-                                "INSERT INTO `thongtinkhambenh` VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)")) {
+                                "INSERT INTO `thongtinkhambenh` (MaBS, NgayKham, PhongKham, MaBN, ChuyenKhoa, CanNang, NhomMau, NhietDo, Mach, HuyetAp, NhipTho, LyDoKham, TinhTrangHienTai, ChuanDoanSoBo, SoNgayNhapVien, HuongDieuTri) "
+                                        + "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)")) {
             stmt.setString(1, MaBS);
             stmt.setString(2, NgayKham);
             stmt.setString(3, PhongKham);
@@ -96,6 +68,7 @@ public class ThongTinKhamBenh {
             stmt.setString(16, HuongDieuTri);
             stmt.executeUpdate();
         } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
         }
     }
 
@@ -124,7 +97,46 @@ public class ThongTinKhamBenh {
             stmt.setString(16, MaBN);
             stmt.executeUpdate();
         } catch (Exception e) {
+            e.printStackTrace();
         }
+    }
+
+    public static List<Model_ThongTinKhamBenh> timKiemTheoMaBN(String MaBN) {
+        List<Model_ThongTinKhamBenh> benhNhanListTk = new ArrayList<>();
+        try {
+            Connection conn = ConnectDB.connect();
+            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM thongtinkhambenh WHERE MaBN = ?");
+            stmt.setString(1, MaBN);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                Model_ThongTinKhamBenh benhNhan = mapResultSetToThongTinKhamBenh(rs);
+                benhNhanListTk.add(benhNhan);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return benhNhanListTk;
+    }
+
+    private static Model_ThongTinKhamBenh mapResultSetToThongTinKhamBenh(ResultSet rs) throws SQLException {
+        String MaBS = rs.getString("MaBS");
+        String NgayKham = rs.getString("NgayKham");
+        String PhongKham = rs.getString("PhongKham");
+        String MaBN = rs.getString("MaBN");
+        String ChuyenKhoa = rs.getString("ChuyenKhoa");
+        String CanNang = rs.getString("CanNang");
+        String NhomMau = rs.getString("NhomMau");
+        String NhietDo = rs.getString("NhietDo");
+        String Mach = rs.getString("Mach");
+        String HuyetAp = rs.getString("HuyetAp");
+        String NhipTho = rs.getString("NhipTho");
+        String LyDoKham = rs.getString("LyDoKham");
+        String TinhTrangHienTai = rs.getString("TinhTrangHienTai");
+        String ChuanDoanSoBo = rs.getString("ChuanDoanSoBo");
+        int SoNgayNhapVien = rs.getInt("SoNgayNhapVien");
+        String HuongDieuTri = rs.getString("HuongDieuTri");
+        return new Model_ThongTinKhamBenh(MaBS, NgayKham, PhongKham, MaBN, ChuyenKhoa, CanNang, NhomMau, NhietDo,
+                Mach, HuyetAp, NhipTho, LyDoKham, TinhTrangHienTai, ChuanDoanSoBo, SoNgayNhapVien, HuongDieuTri);
     }
 
     private static Model_BenhNhan mapResultSetToBenhNhan(ResultSet rs) throws SQLException {
