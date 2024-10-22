@@ -3,7 +3,6 @@ package com.noitru.model;
 public class Model_ThongTinKhamBenh {
 
     private String MaBS, NgayKham, PhongKham, MaBN, ChuyenKhoa, CanNang, NhomMau, NhietDo, Mach, HuyetAp, NhipTho, LyDoKham, TinhTrangHienTai, ChuanDoanSoBo;
-    int SoNgayNhapVien;
     private String HuongDieuTri;
 
     public String getHuongDieuTri() {
@@ -17,7 +16,7 @@ public class Model_ThongTinKhamBenh {
     public Model_ThongTinKhamBenh(String MaBS, String NgayKham, String PhongKham,
             String MaBN, String ChuyenKhoa, String CanNang, String NhomMau,
             String NhietDo, String Mach, String HuyetAp, String NhipTho,
-            String LyDoKham, String TinhTrangHienTai, String ChuanDoanSoBo, int SoNgayNhapVien, String HuongDieuTri) {
+            String LyDoKham, String TinhTrangHienTai, String ChuanDoanSoBo, String HuongDieuTri) {
         this.MaBS = MaBS;
         this.NgayKham = NgayKham;
         this.PhongKham = PhongKham;
@@ -32,7 +31,6 @@ public class Model_ThongTinKhamBenh {
         this.LyDoKham = LyDoKham;
         this.TinhTrangHienTai = TinhTrangHienTai;
         this.ChuanDoanSoBo = ChuanDoanSoBo;
-        this.SoNgayNhapVien = SoNgayNhapVien;
         this.HuongDieuTri = HuongDieuTri;
     }
 
@@ -149,13 +147,5 @@ public class Model_ThongTinKhamBenh {
 
     public void setChuanDoanSoBo(String ChuanDoanSoBo) {
         this.ChuanDoanSoBo = ChuanDoanSoBo;
-    }
-
-    public int getSoNgayNhapVien() {
-        return SoNgayNhapVien;
-    }
-
-    public void setSoNgayNhapVien(int SoNgayNhapVien) {
-        this.SoNgayNhapVien = SoNgayNhapVien;
     }
 }

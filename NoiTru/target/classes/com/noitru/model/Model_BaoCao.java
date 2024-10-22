@@ -3,9 +3,24 @@ package com.noitru.model;
 public class Model_BaoCao {
 
     private String MaBS, NgayKham, PhongKham, MaBN, ChuyenKhoa, CanNang, NhomMau, NhietDo, Mach, HuyetAp, NhipTho, LyDoKham, TinhTrangHienTai, ChuanDoanSoBo;
-    int SoNgayNhapVien;
     private String HuongDieuTri;
-    private String TenBN, DiaChi, CCCD, GioiTinh;
+    private String TenBN, DiaChi, CCCD, GioiTinh, NgayDKKham, TinhTrang;
+
+    public String getTinhTrang() {
+        return TinhTrang;
+    }
+
+    public void setTinhTrang(String TinhTrang) {
+        this.TinhTrang = TinhTrang;
+    }
+
+    public String getNgayDKKham() {
+        return NgayDKKham;
+    }
+
+    public void setNgayDKKham(String NgayDKKham) {
+        this.NgayDKKham = NgayDKKham;
+    }
 
     public String getDiaChi() {
         return DiaChi;
@@ -50,7 +65,7 @@ public class Model_BaoCao {
     public Model_BaoCao(String MaBS, String NgayKham, String PhongKham,
             String MaBN, String ChuyenKhoa, String CanNang, String NhomMau,
             String NhietDo, String Mach, String HuyetAp, String NhipTho,
-            String LyDoKham, String TinhTrangHienTai, String ChuanDoanSoBo, int SoNgayNhapVien, String HuongDieuTri, String TenBN, String DiaChi, String CCCD, String GioiTinh) {
+            String LyDoKham, String TinhTrangHienTai, String ChuanDoanSoBo, String HuongDieuTri, String TenBN, String DiaChi, String CCCD, String GioiTinh, String NgayDKKham, String TinhTrang) {
         this.MaBS = MaBS;
         this.NgayKham = NgayKham;
         this.PhongKham = PhongKham;
@@ -65,12 +80,13 @@ public class Model_BaoCao {
         this.LyDoKham = LyDoKham;
         this.TinhTrangHienTai = TinhTrangHienTai;
         this.ChuanDoanSoBo = ChuanDoanSoBo;
-        this.SoNgayNhapVien = SoNgayNhapVien;
         this.HuongDieuTri = HuongDieuTri;
         this.TenBN = TenBN;
         this.DiaChi = DiaChi;
         this.CCCD = CCCD;
         this.GioiTinh = GioiTinh;
+        this.NgayDKKham = NgayDKKham;
+        this.TinhTrang = TinhTrang;
     }
 
     public Model_BaoCao() {
@@ -186,13 +202,5 @@ public class Model_BaoCao {
 
     public void setChuanDoanSoBo(String ChuanDoanSoBo) {
         this.ChuanDoanSoBo = ChuanDoanSoBo;
-    }
-
-    public int getSoNgayNhapVien() {
-        return SoNgayNhapVien;
-    }
-
-    public void setSoNgayNhapVien(int SoNgayNhapVien) {
-        this.SoNgayNhapVien = SoNgayNhapVien;
     }
 }

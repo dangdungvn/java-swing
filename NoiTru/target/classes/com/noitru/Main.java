@@ -1,17 +1,22 @@
 package com.noitru;
 
 import com.noitru.form.Form_BacSi;
-import com.noitru.form.Form_2;
-import com.noitru.form.Form_3;
-import com.noitru.form.Form_4;
-import com.noitru.form.Form_5;
-import com.noitru.form.Form_6;
-import com.noitru.form.Form_7;
-import com.noitru.form.Form_Home;
+import com.noitru.form.Form_NhapVien;
+import com.noitru.form.Form_KhamBenh;
+import com.noitru.form.Form_BaoCao;
+import com.noitru.form.Form_XuatHoaDon;
+import com.noitru.form.Form_DieuTriHangNgay;
+import com.noitru.form.Form_SuaThongTinKham;
+import com.noitru.form.Form_BenhNhan;
+import com.noitru.form.Form_ThongKe;
+import com.noitru.login.swing.EventLogin;
 import java.awt.Color;
 import javax.swing.JComponent;
 
 public class Main extends javax.swing.JFrame {
+
+    EventLogin event;
+    Login login;
 
     public Main() {
         initComponents();
@@ -20,26 +25,32 @@ public class Main extends javax.swing.JFrame {
         menu.addEventMenuSelected((int index) -> {
             switch (index) {
                 case 0 ->
-                    setForm(new Form_Home());
+                    setForm(new Form_BenhNhan());
                 case 1 ->
-                    setForm(new Form_BacSi());
+                    setForm(new Form_KhamBenh());
                 case 2 ->
-                    setForm(new Form_2());
+                    setForm(new Form_NhapVien());
                 case 3 ->
-                    setForm(new Form_3());
+                    setForm(new Form_DieuTriHangNgay());
                 case 4 ->
-                    setForm(new Form_4());
-                case 8 ->
-                    setForm(new Form_5());
+                    setForm(new Form_SuaThongTinKham());
+                case 5 ->
+                    setForm(new Form_XuatHoaDon());
                 case 9 ->
-                    setForm(new Form_6());
+                    setForm(new Form_BaoCao());
                 case 10 ->
-                    setForm(new Form_7());
+                    setForm(new Form_ThongKe());
+                case 11 ->
+                    setForm(new Form_BacSi());
+                case 13 -> {
+                    new Login().setVisible(true);
+                    setVisible(false);
+                }
                 default -> {
                 }
             }
         });
-        setForm(new Form_Home());
+        setForm(new Form_BenhNhan());
     }
 
     private void setForm(JComponent com) {
@@ -73,24 +84,22 @@ public class Main extends javax.swing.JFrame {
         panelBorder1Layout.setHorizontalGroup(
             panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelBorder1Layout.createSequentialGroup()
-                .addComponent(menu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(menu, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
-                .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 1066, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(mainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 1066, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panelBorder1Layout.setVerticalGroup(
             panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(menu, javax.swing.GroupLayout.DEFAULT_SIZE, 779, Short.MAX_VALUE)
-            .addGroup(panelBorder1Layout.createSequentialGroup()
-                .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(menu, javax.swing.GroupLayout.DEFAULT_SIZE, 782, Short.MAX_VALUE)
+            .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panelBorder1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(panelBorder1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -110,15 +119,11 @@ public class Main extends javax.swing.JFrame {
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        // </editor-fold>
+
         // </editor-fold>
 
         /* Create and display the form */
@@ -134,4 +139,8 @@ public class Main extends javax.swing.JFrame {
     private com.noitru.component.Menu menu;
     private com.noitru.swing.PanelBorder panelBorder1;
     // End of variables declaration//GEN-END:variables
+
+    void setEventLogin(EventLogin event) {
+        this.event = event;
+    }
 }

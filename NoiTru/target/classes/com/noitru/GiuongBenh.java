@@ -115,7 +115,7 @@ public class GiuongBenh {
 
     public static List<Model_BenhNhan> getBenhNhanChuaDuocXepGiuong() {
         List<Model_BenhNhan> benhNhanList = new ArrayList<>();
-        try (Connection conn = ConnectDB.connect(); PreparedStatement stmt = conn.prepareStatement("SELECT * FROM `benhnhan` WHERE MaBN NOT IN (SELECT MaBN FROM `giuongbenh`)")) {
+        try (Connection conn = ConnectDB.connect(); PreparedStatement stmt = conn.prepareStatement("SELECT * FROM `benhnhan` WHERE TinhTrang = 'Đã Khám'")) {
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 String MaBN = rs.getString("MaBN");
@@ -127,7 +127,10 @@ public class GiuongBenh {
                 String BHYT = rs.getString("BHYT");
                 String DienThoai = rs.getString("DienThoai");
                 String TinhTrang = rs.getString("TinhTrang");
-                Model_BenhNhan benhNhan = new Model_BenhNhan(MaBN, TenBN, NgaySinh, GioiTinh, CCCD, DiaChi, BHYT, DienThoai, TinhTrang);
+                String NgayDKKham = rs.getString("NgayDKKham");
+                String NgayRaVien = rs.getString("NgayRaVien");
+                Model_BenhNhan benhNhan = new Model_BenhNhan(MaBN, TenBN, NgaySinh, GioiTinh, CCCD, DiaChi, BHYT,
+                        DienThoai, TinhTrang, NgayDKKham, NgayRaVien);
                 benhNhanList.add(benhNhan);
             }
         } catch (ClassNotFoundException | SQLException e) {

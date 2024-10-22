@@ -1,7 +1,6 @@
 package com.noitru;
 
 import com.noitru.model.Model_DieuTri;
-import com.noitru.model.Model_ThongTinKhamBenh;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

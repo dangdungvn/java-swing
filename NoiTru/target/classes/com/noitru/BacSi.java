@@ -10,10 +10,6 @@ import java.util.List;
 
 public class BacSi {
 
-    public static void main(String[] args) {
-        System.out.println("Hello World!");
-    }
-
     public static List<Model_BacSi> getBacSiByChuyenKhoa(String chuyenKhoaCb) {
         List<Model_BacSi> bacSiList = new ArrayList<>();
         try (Connection conn = ConnectDB.connect(); PreparedStatement stmt = conn.prepareStatement("SELECT * FROM `bacsi` WHERE ChuyenKhoa = ?")) {
@@ -80,7 +76,7 @@ public class BacSi {
 
     public static List<String> getAllChuyenKhoa() {
         List<String> chuyenKhoaList = new ArrayList<>();
-        try (Connection conn = ConnectDB.connect(); PreparedStatement stmt = conn.prepareStatement("SELECT ChuyenKhoa FROM `bacsi` GROUP BY ChuyenKhoa")) {
+        try (Connection conn = ConnectDB.connect(); PreparedStatement stmt = conn.prepareStatement("SELECT ChuyenKhoa FROM `chuyenkhoa` GROUP BY ChuyenKhoa")) {
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 String ChuyenKhoa = rs.getString("ChuyenKhoa");

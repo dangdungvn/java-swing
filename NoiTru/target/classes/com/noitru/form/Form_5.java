@@ -46,9 +46,9 @@ public class Form_5 extends javax.swing.JPanel {
                 List<Model_ThongTinKhamBenh> ttkmList = ThongTinKhamBenh.timKiemTheoMaBN(text);
                 int soNgayO = 0;
                 int tongTienPhong = 0;
-                for (Model_ThongTinKhamBenh thongTinKhamBenh : ttkmList) {
-                    soNgayO = thongTinKhamBenh.getSoNgayNhapVien();
-                }
+//                for (Model_ThongTinKhamBenh thongTinKhamBenh : ttkmList) {
+//                    soNgayO = thongTinKhamBenh.getSoNgayNhapVien();
+//                }
                 for (Model_GiuongBenh tienPhong : tienPhongList) {
                     if (tienPhong.getLoaiPhong().equals("Giường bệnh thường")) {
                         tongTienPhong = soNgayO * 500000;

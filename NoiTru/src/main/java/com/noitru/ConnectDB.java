@@ -22,23 +22,22 @@ public class ConnectDB {
     }
 
     public void setF(File f) {
-        this.f = f;
+        ConnectDB.f = f;
     }
 
     public static Connection connect() throws ClassNotFoundException, SQLException {
         Connection conn = null;
         Class.forName("com.mysql.cj.jdbc.Driver");
-        String url = "jdbc:mysql://localhost:3306/benhvien?zeroDateTimeBehavior=CONVERT_TO_NULL";
+        String url = "jdbc:mysql://localhost:3306/benhviennoitru?zeroDateTimeBehavior=CONVERT_TO_NULL";
         String user = "root";
         String pass = "";
         conn = DriverManager.getConnection(url, user, pass);
         return conn;
     }
 
-    public static void main(String[] args) {
-        new Main().setVisible(true);
-    }
-
+//    public static void main(String[] args) {
+//        new Main().setVisible(true);
+//    }
     public static CellStyle DinhdangHeader(XSSFSheet sheet) {
         // Create font
         Font font = sheet.getWorkbook().createFont();

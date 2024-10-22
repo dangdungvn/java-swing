@@ -20,6 +20,7 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
@@ -235,7 +236,7 @@ public class Form_Home extends javax.swing.JPanel {
                 Object[] row = {benhNhan.getMaBN(), benhNhan.getTenBN(), benhNhan.getNgaySinh(),
                     benhNhan.getGioiTinh(),
                     benhNhan.getCCCD(), benhNhan.getDiaChi(), benhNhan.getBHYT(),
-                    benhNhan.getDienThoai(), benhNhan.getTinhTrang()};
+                    benhNhan.getDienThoai(), benhNhan.getTinhTrang(), benhNhan.getNgayDKKham(), benhNhan.getNgayRaVien()};
                 table.addRow(row);
             }
         });
@@ -260,6 +261,7 @@ public class Form_Home extends javax.swing.JPanel {
                 String BHYT = bhEdt.getText().trim();
                 String DienThoai = dtEdt.getText().trim();
                 String TinhTrang = "Chờ Xét Nghiệm";
+                String NgayDKKham = LocalDate.now().toString();
                 if (CheckLoi.checkDT(DienThoai) == null) {
                     JOptionPane.showMessageDialog(this, "Lỗi số điện thoại, xin vui lòng nhập lại!");
                     return;
@@ -270,7 +272,7 @@ public class Form_Home extends javax.swing.JPanel {
                     JOptionPane.showMessageDialog(this, "Vui lòng điền đầy đủ thông tin!");
                 } else {
                     BenhNhan.addBenhNhan(MaBN, TenBN, NgaySinh, GioiTinh, CCCD, DiaChi, BHYT,
-                            DienThoai, TinhTrang);
+                            DienThoai, TinhTrang, NgayDKKham, null);
                     getAllDataBenhNhan();
                     mbnEdt.setText("");
                     tbnEdt.setText("");
@@ -394,11 +396,11 @@ public class Form_Home extends javax.swing.JPanel {
 
             },
             new String [] {
-                "MaBN", "TenBN", "Ngày Sinh", "Giới Tính", "CCCD", "Địa Chỉ", "BHYT", "Điện Thoại", "Tình Trạng"
+                "MaBN", "TenBN", "Ngày Sinh", "Giới Tính", "CCCD", "Địa Chỉ", "BHYT", "Điện Thoại", "Tình Trạng", "NgayDKKham", "NgayXuatVien"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {

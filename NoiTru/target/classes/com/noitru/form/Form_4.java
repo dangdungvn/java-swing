@@ -32,7 +32,7 @@ public class Form_4 extends javax.swing.JPanel {
                     for (Model_BaoCao thongTinKhamBenh : thongTinKhamBenhList) {
                         Object[] row = {thongTinKhamBenh.getTenBN(), thongTinKhamBenh.getDiaChi(), thongTinKhamBenh.getCCCD(),
                             thongTinKhamBenh.getGioiTinh(), thongTinKhamBenh.getChuanDoanSoBo(), thongTinKhamBenh.getChuyenKhoa(),
-                            thongTinKhamBenh.getHuongDieuTri(), thongTinKhamBenh.getSoNgayNhapVien()};
+                            thongTinKhamBenh.getHuongDieuTri()};
                         table.addRow(row);
                     }
                 });
@@ -58,7 +58,7 @@ public class Form_4 extends javax.swing.JPanel {
             for (Model_BaoCao thongTinKhamBenh : thongTinKhamBenhList) {
                 Object[] row = {thongTinKhamBenh.getTenBN(), thongTinKhamBenh.getDiaChi(), thongTinKhamBenh.getCCCD(),
                     thongTinKhamBenh.getGioiTinh(), thongTinKhamBenh.getChuanDoanSoBo(), thongTinKhamBenh.getChuyenKhoa(),
-                    thongTinKhamBenh.getHuongDieuTri(), thongTinKhamBenh.getSoNgayNhapVien()};
+                    thongTinKhamBenh.getHuongDieuTri()};
                 table.addRow(row);
             }
         });

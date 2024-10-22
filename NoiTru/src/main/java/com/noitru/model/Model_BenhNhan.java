@@ -11,6 +11,24 @@ public class Model_BenhNhan {
     private String BHYT;
     private String DienThoai;
     private String TinhTrang;
+    private String NgayDKKham;
+    private String NgayRaVien;
+
+    public String getNgayDKKham() {
+        return NgayDKKham;
+    }
+
+    public void setNgayDKKham(String NgayDKKham) {
+        this.NgayDKKham = NgayDKKham;
+    }
+
+    public String getNgayRaVien() {
+        return NgayRaVien;
+    }
+
+    public void setNgayRaVien(String NgayRaVien) {
+        this.NgayRaVien = NgayRaVien;
+    }
 
     public String getTinhTrang() {
         return TinhTrang;
@@ -21,7 +39,7 @@ public class Model_BenhNhan {
     }
 
     public Model_BenhNhan(String MaBN, String TenBN, String NgaySinh, String GioiTinh, String CCCD, String DiaChi,
-            String BHYT, String DienThoai, String TinhTrang) {
+            String BHYT, String DienThoai, String TinhTrang, String NgayDKKham, String NgayRaVien) {
         this.MaBN = MaBN;
         this.TenBN = TenBN;
         this.NgaySinh = NgaySinh;
@@ -31,6 +49,8 @@ public class Model_BenhNhan {
         this.BHYT = BHYT;
         this.DienThoai = DienThoai;
         this.TinhTrang = TinhTrang;
+        this.NgayDKKham = NgayDKKham;
+        this.NgayRaVien = NgayRaVien;
     }
 
     public Model_BenhNhan() {

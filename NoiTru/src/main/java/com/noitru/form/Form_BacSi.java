@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
- */
 package com.noitru.form;
 
 import com.noitru.ConnectDB;
@@ -40,10 +36,6 @@ import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-/**
- *
- * @author Admin
- */
 public class Form_BacSi extends javax.swing.JPanel {
 
     public Form_BacSi() {
@@ -80,9 +72,6 @@ public class Form_BacSi extends javax.swing.JPanel {
                 row.setHeight((short) 500);
                 cell = row.createCell(0, CellType.STRING);
                 cell.setCellValue("DANH SÁCH BÁC SĨ");
-
-                //Tạo dòng tiêu đều của bảng
-                // create CellStyle
                 CellStyle cellStyle_Head = ConnectDB.DinhdangHeader(spreadsheet);
                 row = spreadsheet.createRow((short) 3);
                 row.setHeight((short) 500);
