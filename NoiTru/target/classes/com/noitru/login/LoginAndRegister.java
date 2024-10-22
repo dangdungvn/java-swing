@@ -22,8 +22,8 @@ public class LoginAndRegister extends javax.swing.JPanel {
     public static Color mainColor = new Color(222, 231, 255);
 
     public void setAnimate(int animate) {
-        layout.setComponentConstraints(register, "pos (100%)-290px-" + animate + " 0.5al n n");
-        layout.setComponentConstraints(login, "pos (100%)-10px+" + animate + " 0.5al n n");
+        layout.setComponentConstraints(register, "pos (50%)-290px-" + animate + " 0.5al n n");
+        layout.setComponentConstraints(login, "pos (50%)-10px+" + animate + " 0.5al n n");
         if (animate == 30) {
             if (isLogin) {
                 setComponentZOrder(login, 0);
@@ -38,10 +38,11 @@ public class LoginAndRegister extends javax.swing.JPanel {
         initComponents();
         init();
         initAnimator();
+        showLogin(false);
     }
 
     private void initAnimator() {
-        animator = new Animator(1000, new TimingTargetAdapter() {
+        animator = new Animator(500, new TimingTargetAdapter() {
             @Override
             public void timingEvent(float fraction) {
                 if (isLogin) {
@@ -107,6 +108,7 @@ public class LoginAndRegister extends javax.swing.JPanel {
 
     public void setEventLogin(EventLogin event) {
         login.setEventLogin(event);
+        register.setEventLogin(event);
     }
 
     @SuppressWarnings("unchecked")

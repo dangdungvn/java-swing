@@ -9,7 +9,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>22</maven.compiler.source>
         <maven.compiler.target>22</maven.compiler.target>
-        <exec.mainClass>com.noitru.Main</exec.mainClass>
+        <exec.mainClass>com.noitru.Login</exec.mainClass>
     </properties>
     <dependencies>
         <dependency>
@@ -63,8 +63,6 @@
             <artifactId>miglayout-swing</artifactId>
             <version>5.0</version>
         </dependency>
-
-
     </dependencies>
     <build>
         <resources>

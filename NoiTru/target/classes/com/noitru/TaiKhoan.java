@@ -7,7 +7,8 @@ import java.sql.SQLException;
 
 public class TaiKhoan {
 
-    public static void addTaiKhoan(String TaiKhoan, String MatKhau, String Email) {
+    public static boolean addTaiKhoan(String TaiKhoan, String MatKhau, String Email) {
+        boolean exists = true;
         try (Connection conn = ConnectDB.connect(); PreparedStatement stmt = conn.prepareStatement(
                 "INSERT INTO taikhoan (TaiKhoan, MatKhau, Email) "
                 + "VALUES (?, ?, ?)")) {
@@ -16,7 +17,10 @@ public class TaiKhoan {
             stmt.setString(3, Email);
             stmt.executeUpdate();
         } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+            exists = false;
         }
+        return exists;
     }
 
     public static boolean checkTaiKhoan(String Email, String MatKhau) {

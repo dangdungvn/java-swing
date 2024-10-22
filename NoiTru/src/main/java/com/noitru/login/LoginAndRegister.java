@@ -12,7 +12,7 @@ import org.jdesktop.animation.timing.Animator;
 import org.jdesktop.animation.timing.TimingTargetAdapter;
 import org.jdesktop.animation.timing.interpolation.PropertySetter;
 
-public class LoginAndRegister extends javax.swing.JPanel {
+public final class LoginAndRegister extends javax.swing.JPanel {
 
     private MigLayout layout;
     private Register register;
@@ -38,10 +38,11 @@ public class LoginAndRegister extends javax.swing.JPanel {
         initComponents();
         init();
         initAnimator();
+        showLogin(false);
     }
 
     private void initAnimator() {
-        animator = new Animator(1000, new TimingTargetAdapter() {
+        animator = new Animator(500, new TimingTargetAdapter() {
             @Override
             public void timingEvent(float fraction) {
                 if (isLogin) {
@@ -107,6 +108,7 @@ public class LoginAndRegister extends javax.swing.JPanel {
 
     public void setEventLogin(EventLogin event) {
         login.setEventLogin(event);
+        register.setEventLogin(event);
     }
 
     @SuppressWarnings("unchecked")

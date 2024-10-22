@@ -83,7 +83,7 @@ public class ThongTinKhamBenh {
         }
     }
 
-    public static void suaThongTin(String MaBS, String NgayKham, String PhongKham, String MaBN, String ChuyenKhoa,
+    public static boolean suaThongTin(String MaBS, String NgayKham, String PhongKham, String MaBN, String ChuyenKhoa,
             String CanNang, String NhomMau, String NhietDo,
             String Mach, String HuyetAp, String NhipTho, String LyDoKham, String TinhTrangHienTai,
             String ChuanDoanSoBo, String HuongDieuTri) {
@@ -105,8 +105,10 @@ public class ThongTinKhamBenh {
             stmt.setString(14, HuongDieuTri);
             stmt.setString(15, MaBN);
             stmt.executeUpdate();
+            return true;
         } catch (Exception e) {
             e.printStackTrace();
+            return false;
         }
     }
 

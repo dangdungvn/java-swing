@@ -2,6 +2,7 @@ package com.noitru.form;
 
 import com.noitru.BacSi;
 import com.noitru.BenhNhan;
+import com.noitru.ConnectDB;
 import com.noitru.GiuongBenh;
 import com.noitru.ThongTinKhamBenh;
 import com.noitru.model.Model_BacSi;
@@ -15,15 +16,33 @@ import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
+import org.apache.poi.ss.usermodel.BorderStyle;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.CellType;
+import org.apache.poi.ss.usermodel.CreationHelper;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 public class Form_NhapVien extends javax.swing.JPanel {
 
@@ -47,6 +66,117 @@ public class Form_NhapVien extends javax.swing.JPanel {
         lpEdt.setEnabled(false);
         ttgEdt.setEnabled(false);
         themBtn.setEnabled(true);
+        xuatData();
+    }
+
+    private void xuatData() {
+        xuatBtn.addActionListener((ActionEvent e) -> {
+            try {
+                XSSFWorkbook workbook = new XSSFWorkbook();
+                XSSFSheet spreadsheet = workbook.createSheet("dieutri");
+                // register the columns you wish to track and compute the column width
+                CreationHelper createHelper = workbook.getCreationHelper();
+                XSSFRow row = null;
+                Cell cell = null;
+                row = spreadsheet.createRow((short) 2);
+                row.setHeight((short) 500);
+                cell = row.createCell(0, CellType.STRING);
+                cell.setCellValue("DANH SÁCH BỆNH NHÂN ĐANG ĐIỀU TRỊ");
+
+                //Tạo dòng tiêu đều của bảng
+                // create CellStyle
+                CellStyle cellStyle_Head = ConnectDB.DinhdangHeader(spreadsheet);
+                row = spreadsheet.createRow((short) 3);
+                row.setHeight((short) 500);
+                cell = row.createCell(0, CellType.STRING);
+                cell.setCellStyle(cellStyle_Head);
+                cell.setCellValue("STT");
+
+                cell = row.createCell(1, CellType.STRING);
+                cell.setCellStyle(cellStyle_Head);
+                cell.setCellValue("Chuyên Khoa");
+
+                cell = row.createCell(2, CellType.STRING);
+                cell.setCellStyle(cellStyle_Head);
+                cell.setCellValue("Loại Phòng");
+
+                cell = row.createCell(3, CellType.STRING);
+                cell.setCellStyle(cellStyle_Head);
+                cell.setCellValue("Số Phòng");
+
+                cell = row.createCell(4, CellType.STRING);
+                cell.setCellStyle(cellStyle_Head);
+                cell.setCellValue("Số Giường");
+
+                cell = row.createCell(5, CellType.STRING);
+                cell.setCellStyle(cellStyle_Head);
+                cell.setCellValue("MaBN");
+
+                cell = row.createCell(6, CellType.STRING);
+                cell.setCellStyle(cellStyle_Head);
+                cell.setCellValue("MaBS");
+
+                //Kết nối DB
+                Connection con = ConnectDB.connect();
+                String sql = "Select * From giuongbenh";
+                PreparedStatement st = con.prepareStatement(sql);
+                ResultSet rs = st.executeQuery();
+                //Đổ dữ liệu từ rs vào các ô trong excel
+                ResultSetMetaData rsmd = rs.getMetaData();
+                int tongsocot = rsmd.getColumnCount();
+
+                //Đinh dạng Tạo đường kẻ cho ô chứa dữ liệu
+                CellStyle cellStyle_data = spreadsheet.getWorkbook().createCellStyle();
+                cellStyle_data.setBorderLeft(BorderStyle.THIN);
+                cellStyle_data.setBorderRight(BorderStyle.THIN);
+                cellStyle_data.setBorderBottom(BorderStyle.THIN);
+                int i = 0;
+                while (rs.next()) {
+                    row = spreadsheet.createRow((short) 4 + i);
+                    row.setHeight((short) 400);
+
+                    cell = row.createCell(0);
+                    cell.setCellStyle(cellStyle_data);
+                    cell.setCellValue(i + 1);
+
+                    cell = row.createCell(1);
+                    cell.setCellStyle(cellStyle_data);
+                    cell.setCellValue(rs.getString("ChuyenKhoa"));
+
+                    cell = row.createCell(2);
+                    cell.setCellStyle(cellStyle_data);
+                    cell.setCellValue(rs.getString("LoaiPhong"));
+                    cell = row.createCell(3);
+                    cell.setCellStyle(cellStyle_data);
+                    cell.setCellValue(rs.getString("SoPhong"));
+
+                    cell = row.createCell(4);
+                    cell.setCellStyle(cellStyle_data);
+                    cell.setCellValue(rs.getString("SoGiuong"));
+
+                    cell = row.createCell(5);
+                    cell.setCellStyle(cellStyle_data);
+                    cell.setCellValue(rs.getString("MaBN"));
+
+                    cell = row.createCell(6);
+                    cell.setCellStyle(cellStyle_data);
+                    cell.setCellValue(rs.getString("MaBS"));
+                    i++;
+                }
+                for (int col = 0; col < tongsocot; col++) {
+                    spreadsheet.autoSizeColumn(col);
+                }
+
+                File f = new File("D:\\DanhsachBenhNhanDangDieuTri.xlsx");
+                try (FileOutputStream out = new FileOutputStream(f)) {
+                    workbook.write(out);
+                }
+            } catch (ClassNotFoundException | SQLException ex) {
+                ex.printStackTrace();
+            } catch (IOException ex) {
+                Logger.getLogger(Form_BacSi.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        });
     }
 
     private void addMap() {
@@ -335,7 +465,7 @@ public class Form_NhapVien extends javax.swing.JPanel {
         xoaBtn = new com.noitru.swing.Button();
         themBtn = new com.noitru.swing.Button();
         suaBtn = new com.noitru.swing.Button();
-        suaBtn2 = new com.noitru.swing.Button();
+        xuatBtn = new com.noitru.swing.Button();
         panelBorder5 = new com.noitru.swing.PanelBorder();
         jLabel5 = new javax.swing.JLabel();
         spTable4 = new javax.swing.JScrollPane();
@@ -478,11 +608,11 @@ public class Form_NhapVien extends javax.swing.JPanel {
         suaBtn.setText("Sửa");
         suaBtn.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
 
-        suaBtn2.setBackground(new java.awt.Color(148, 148, 242));
-        suaBtn2.setForeground(new java.awt.Color(255, 255, 255));
-        suaBtn2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/noitru/icon/up-arrow.png"))); // NOI18N
-        suaBtn2.setText("Xuất Excel");
-        suaBtn2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        xuatBtn.setBackground(new java.awt.Color(148, 148, 242));
+        xuatBtn.setForeground(new java.awt.Color(255, 255, 255));
+        xuatBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/noitru/icon/up-arrow.png"))); // NOI18N
+        xuatBtn.setText("Xuất Excel");
+        xuatBtn.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
 
         javax.swing.GroupLayout panelBorder2Layout = new javax.swing.GroupLayout(panelBorder2);
         panelBorder2.setLayout(panelBorder2Layout);
@@ -496,7 +626,7 @@ public class Form_NhapVien extends javax.swing.JPanel {
                 .addGap(20, 20, 20)
                 .addComponent(xoaBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(suaBtn2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(xuatBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(20, 20, 20))
         );
         panelBorder2Layout.setVerticalGroup(
@@ -507,7 +637,7 @@ public class Form_NhapVien extends javax.swing.JPanel {
                     .addComponent(xoaBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(themBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(suaBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(suaBtn2, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(xuatBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(15, Short.MAX_VALUE))
         );
 
@@ -615,10 +745,10 @@ public class Form_NhapVien extends javax.swing.JPanel {
     private com.noitru.swing.jcombosuggestion.ComboBoxSuggestion spCb;
     private javax.swing.JScrollPane spTable4;
     private com.noitru.swing.Button suaBtn;
-    private com.noitru.swing.Button suaBtn2;
     private com.noitru.swing.Button themBtn;
     private com.noitru.swing.search.TextFieldSearchOption timKiemEdt;
     private com.noitru.swing.TextFeild ttgEdt;
     private com.noitru.swing.Button xoaBtn;
+    private com.noitru.swing.Button xuatBtn;
     // End of variables declaration//GEN-END:variables
 }

@@ -1,17 +1,37 @@
 package com.noitru.form;
 
+import com.noitru.BacSi;
+import com.noitru.ConnectDB;
 import com.noitru.ThongTinKhamBenh;
+import com.noitru.model.Model_BacSi;
 import com.noitru.model.Model_ThongTinKhamBenh;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
+import org.apache.poi.ss.usermodel.BorderStyle;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.CellType;
+import org.apache.poi.ss.usermodel.CreationHelper;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 public class Form_SuaThongTinKham extends javax.swing.JPanel {
 
@@ -29,6 +49,7 @@ public class Form_SuaThongTinKham extends javax.swing.JPanel {
         loadCB();
         tableClick();
         updateData();
+        xuatData();
     }
 
     public String getDuLieuCot3(int row) {
@@ -64,6 +85,248 @@ public class Form_SuaThongTinKham extends javax.swing.JPanel {
         });
     }
 
+    private void xuatData() {
+        xuatBtn.addActionListener((var e) -> {
+            try {
+                XSSFWorkbook workbook = new XSSFWorkbook();
+                XSSFSheet spreadsheet = workbook.createSheet("thongtinkhambenh");
+                // register the columns you wish to track and compute the column width
+                CreationHelper createHelper = workbook.getCreationHelper();
+                XSSFRow row = null;
+                Cell cell = null;
+                row = spreadsheet.createRow((short) 2);
+                row.setHeight((short) 500);
+                cell = row.createCell(0, CellType.STRING);
+                cell.setCellValue("DANH SÁCH THÔNG TIN KHÁM BỆNH");
+
+                //Tạo dòng tiêu đều của bảng
+                // create CellStyle
+                CellStyle cellStyle_Head = ConnectDB.DinhdangHeader(spreadsheet);
+                row = spreadsheet.createRow((short) 3);
+                row.setHeight((short) 500);
+                cell = row.createCell(0, CellType.STRING);
+                cell.setCellStyle(cellStyle_Head);
+                cell.setCellValue("STT");
+
+                cell = row.createCell(1, CellType.STRING);
+                cell.setCellStyle(cellStyle_Head);
+                cell.setCellValue("Mã Bác Sĩ");
+
+                cell = row.createCell(2, CellType.STRING);
+                cell.setCellStyle(cellStyle_Head);
+                cell.setCellValue("Ngày Khám");
+
+                cell = row.createCell(3, CellType.STRING);
+                cell.setCellStyle(cellStyle_Head);
+                cell.setCellValue("Phòng Khám");
+
+                cell = row.createCell(4, CellType.STRING);
+                cell.setCellStyle(cellStyle_Head);
+                cell.setCellValue("Mã Bệnh Nhân");
+
+                cell = row.createCell(5, CellType.STRING);
+                cell.setCellStyle(cellStyle_Head);
+                cell.setCellValue("Chuyên Khoa");
+
+                cell = row.createCell(6, CellType.STRING);
+                cell.setCellStyle(cellStyle_Head);
+                cell.setCellValue("Cân Nặng");
+
+                cell = row.createCell(7, CellType.STRING);
+                cell.setCellStyle(cellStyle_Head);
+                cell.setCellValue("Nhóm Máu");
+
+                cell = row.createCell(8, CellType.STRING);
+                cell.setCellStyle(cellStyle_Head);
+                cell.setCellValue("Nhiệt Độ");
+                cell = row.createCell(9, CellType.STRING);
+                cell.setCellStyle(cellStyle_Head);
+                cell.setCellValue("Mạch");
+
+                cell = row.createCell(10, CellType.STRING);
+                cell.setCellStyle(cellStyle_Head);
+                cell.setCellValue("Huyết Áp");
+
+                cell = row.createCell(11, CellType.STRING);
+                cell.setCellStyle(cellStyle_Head);
+                cell.setCellValue("Nhịp Thở");
+                cell = row.createCell(12, CellType.STRING);
+                cell.setCellStyle(cellStyle_Head);
+                cell.setCellValue("Lý Do Khám");
+
+                cell = row.createCell(13, CellType.STRING);
+                cell.setCellStyle(cellStyle_Head);
+                cell.setCellValue("Tình Trạng Hiện Tại");
+
+                cell = row.createCell(14, CellType.STRING);
+                cell.setCellStyle(cellStyle_Head);
+                cell.setCellValue("Chuẩn Đoán Sơ Bộ");
+
+                cell = row.createCell(15, CellType.STRING);
+                cell.setCellStyle(cellStyle_Head);
+                cell.setCellValue("Hướng Điều Trị");
+
+                cell = row.createCell(16, CellType.STRING);
+                cell.setCellStyle(cellStyle_Head);
+                cell.setCellValue("Tên Bệnh Nhân");
+                cell = row.createCell(17, CellType.STRING);
+                cell.setCellStyle(cellStyle_Head);
+                cell.setCellValue("Địa Chỉ");
+                cell = row.createCell(18, CellType.STRING);
+                cell.setCellStyle(cellStyle_Head);
+                cell.setCellValue("CCCD");
+
+                cell = row.createCell(19, CellType.STRING);
+                cell.setCellStyle(cellStyle_Head);
+                cell.setCellValue("Giới Tính");
+
+                cell = row.createCell(20, CellType.STRING);
+                cell.setCellStyle(cellStyle_Head);
+                cell.setCellValue("Ngày ĐK Khám");
+
+                cell = row.createCell(21, CellType.STRING);
+                cell.setCellStyle(cellStyle_Head);
+                cell.setCellValue("Tình Trạng");
+
+                //Kết nối DB
+                Connection con = ConnectDB.connect();
+                String sql = "SELECT thongtinkhambenh.*, benhnhan.TenBN, benhnhan.DiaChi, benhnhan.CCCD, benhnhan.GioiTinh ,benhnhan.NgayDKKham, benhnhan.TinhTrang "
+                        + "FROM thongtinkhambenh "
+                        + "JOIN benhnhan ON thongtinkhambenh.MaBN = benhnhan.MaBN";
+                PreparedStatement st = con.prepareStatement(sql);
+                ResultSet rs = st.executeQuery();
+                //Đổ dữ liệu từ rs vào các ô trong excel
+                ResultSetMetaData rsmd = rs.getMetaData();
+                int tongsocot = rsmd.getColumnCount();
+
+                //Đinh dạng Tạo đường kẻ cho ô chứa dữ liệu
+                CellStyle cellStyle_data = spreadsheet.getWorkbook().createCellStyle();
+                cellStyle_data.setBorderLeft(BorderStyle.THIN);
+                cellStyle_data.setBorderRight(BorderStyle.THIN);
+                cellStyle_data.setBorderBottom(BorderStyle.THIN);
+                int i = 0;
+                while (rs.next()) {
+                    row = spreadsheet.createRow((short) 4 + i);
+                    row.setHeight((short) 400);
+
+                    cell = row.createCell(0);
+                    cell.setCellStyle(cellStyle_data);
+                    cell.setCellValue(i + 1);
+
+                    cell = row.createCell(1);
+                    cell.setCellStyle(cellStyle_data);
+                    cell.setCellValue(rs.getString("MaBS"));
+
+                    //Định dạng ngày tháng trong excel
+                    java.util.Date ngay = new java.util.Date(rs.getDate("NgayKham").getTime());
+                    CellStyle cellStyle = workbook.createCellStyle();
+                    cellStyle.setDataFormat(createHelper.createDataFormat().getFormat("dd/MM/yyyy"));
+                    cellStyle.setBorderLeft(BorderStyle.THIN);
+                    cellStyle.setBorderRight(BorderStyle.THIN);
+                    cellStyle.setBorderBottom(BorderStyle.THIN);
+                    cell = row.createCell(2);
+                    cell.setCellValue(ngay);
+                    cell.setCellStyle(cellStyle);
+
+                    cell = row.createCell(3);
+                    cell.setCellStyle(cellStyle_data);
+                    cell.setCellValue(rs.getString("PhongKham"));
+
+                    cell = row.createCell(4);
+                    cell.setCellStyle(cellStyle_data);
+                    cell.setCellValue(rs.getString("MaBN"));
+
+                    cell = row.createCell(5);
+                    cell.setCellStyle(cellStyle_data);
+                    cell.setCellValue(rs.getString("ChuyenKhoa"));
+
+                    cell = row.createCell(6);
+                    cell.setCellStyle(cellStyle_data);
+                    cell.setCellValue(rs.getString("CanNang"));
+
+                    cell = row.createCell(7);
+                    cell.setCellStyle(cellStyle_data);
+                    cell.setCellValue(rs.getString("NhomMau"));
+
+                    cell = row.createCell(8);
+                    cell.setCellStyle(cellStyle_data);
+                    cell.setCellValue(rs.getString("NhietDo"));
+
+                    cell = row.createCell(9);
+                    cell.setCellStyle(cellStyle_data);
+                    cell.setCellValue(rs.getString("Mach"));
+
+                    cell = row.createCell(10);
+                    cell.setCellStyle(cellStyle_data);
+                    cell.setCellValue(rs.getString("HuyetAp"));
+
+                    cell = row.createCell(11);
+                    cell.setCellStyle(cellStyle_data);
+                    cell.setCellValue(rs.getString("NhipTho"));
+
+                    cell = row.createCell(12);
+                    cell.setCellStyle(cellStyle_data);
+                    cell.setCellValue(rs.getString("LyDoKham"));
+
+                    cell = row.createCell(13);
+                    cell.setCellStyle(cellStyle_data);
+                    cell.setCellValue(rs.getString("TinhTrangHienTai"));
+
+                    cell = row.createCell(14);
+                    cell.setCellStyle(cellStyle_data);
+                    cell.setCellValue(rs.getString("ChuanDoanSoBo"));
+
+                    cell = row.createCell(15);
+                    cell.setCellStyle(cellStyle_data);
+                    cell.setCellValue(rs.getString("HuongDieuTri"));
+
+                    cell = row.createCell(16);
+                    cell.setCellStyle(cellStyle_data);
+                    cell.setCellValue(rs.getString("TenBN"));
+
+                    cell = row.createCell(17);
+                    cell.setCellStyle(cellStyle_data);
+                    cell.setCellValue(rs.getString("DiaChi"));
+
+                    cell = row.createCell(18);
+                    cell.setCellStyle(cellStyle_data);
+                    cell.setCellValue(rs.getString("CCCD"));
+
+                    cell = row.createCell(19);
+                    cell.setCellStyle(cellStyle_data);
+                    cell.setCellValue(rs.getString("GioiTinh"));
+
+                    java.util.Date ngaydk = new java.util.Date(rs.getDate("NgayDKKham").getTime());
+                    cellStyle.setDataFormat(createHelper.createDataFormat().getFormat("dd/MM/yyyy"));
+                    cellStyle.setBorderLeft(BorderStyle.THIN);
+                    cellStyle.setBorderRight(BorderStyle.THIN);
+                    cellStyle.setBorderBottom(BorderStyle.THIN);
+                    cell = row.createCell(20);
+                    cell.setCellValue(ngay);
+                    cell.setCellStyle(cellStyle);
+
+                    cell = row.createCell(21);
+                    cell.setCellStyle(cellStyle_data);
+                    cell.setCellValue(rs.getString("TinhTrang"));
+                    i++;
+                }
+                for (int col = 0; col < tongsocot; col++) {
+                    spreadsheet.autoSizeColumn(col);
+                }
+
+                File f = new File("D:\\DanhsachTinhTrangBenhNhan.xlsx");
+                try (FileOutputStream out = new FileOutputStream(f)) {
+                    workbook.write(out);
+                }
+
+            } catch (ClassNotFoundException | SQLException ex) {
+                ex.printStackTrace();
+            } catch (IOException ex) {
+                Logger.getLogger(Form_BacSi.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        });
+    }
+
     private void updateData() {
         updateBtn.addActionListener((ActionEvent e) -> {
             try {
@@ -84,9 +347,13 @@ public class Form_SuaThongTinKham extends javax.swing.JPanel {
                 String TinhTrangHienTai = tthtEdt.getText().trim();
                 String ChuanDoanSoBo = cdEdt.getText().trim();
                 String HuongDieuTri = hdtEdt.getText().trim();
-                ThongTinKhamBenh.suaThongTin(MaBS, NgayKham, PhongKham, MaBN, ChuyenKhoa, CanNang, NhomMau, NhietDo,
+                if (ThongTinKhamBenh.suaThongTin(MaBS, NgayKham, PhongKham, MaBN, ChuyenKhoa, CanNang, NhomMau, NhietDo,
                         Mach, HuyetAp, NhipTho, LyDoKham, TinhTrangHienTai, ChuanDoanSoBo,
-                        HuongDieuTri);
+                        HuongDieuTri)) {
+                    JOptionPane.showMessageDialog(this, "Đã sửa");
+                } else {
+                    JOptionPane.showMessageDialog(this, "Lỗi");
+                }
                 loadDB();
             } catch (ParseException ex) {
                 Logger.getLogger(Form_SuaThongTinKham.class.getName()).log(Level.SEVERE, null, ex);
@@ -98,7 +365,11 @@ public class Form_SuaThongTinKham extends javax.swing.JPanel {
         List<Model_ThongTinKhamBenh> ttkbList = ThongTinKhamBenh.getAllThongTin();
         for (Model_ThongTinKhamBenh mttkb : ttkbList) {
             mbnCb.addItem(mttkb.getMaBN());
-            mbsCb.addItem(mttkb.getMaBS());
+            nkEdt.setText(mttkb.getNgayKham());
+        }
+        List<Model_BacSi> listBS = BacSi.getAllBacSi();
+        for (Model_BacSi mbs : listBS) {
+            mbsCb.addItem(mbs.getMaBS());
         }
         mbnCb.addActionListener((ActionEvent e) -> {
             String text = mbnCb.getSelectedItem().toString();
@@ -119,6 +390,10 @@ public class Form_SuaThongTinKham extends javax.swing.JPanel {
             }
 
         });
+        List<String> chuyenKhoaList = BacSi.getAllChuyenKhoa();
+        for (String string : chuyenKhoaList) {
+            ckCb.addItem(string);
+        }
     }
 
     private void loadDB() {
@@ -149,7 +424,7 @@ public class Form_SuaThongTinKham extends javax.swing.JPanel {
         table = new com.noitru.swing.Table();
         mbnCb = new com.noitru.swing.jcombosuggestion.ComboBoxSuggestion();
         updateBtn = new com.noitru.swing.Button();
-        button2 = new com.noitru.swing.Button();
+        xuatBtn = new com.noitru.swing.Button();
         panelBorder1 = new com.noitru.swing.PanelBorder();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -243,11 +518,11 @@ public class Form_SuaThongTinKham extends javax.swing.JPanel {
         updateBtn.setText("Update");
         updateBtn.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
 
-        button2.setForeground(new java.awt.Color(51, 51, 255));
-        button2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/noitru/icon/up-arrow.png"))); // NOI18N
-        button2.setText("Xuất Excel");
-        button2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        button2.setShadowColor(new java.awt.Color(0, 51, 255));
+        xuatBtn.setForeground(new java.awt.Color(51, 51, 255));
+        xuatBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/noitru/icon/up-arrow.png"))); // NOI18N
+        xuatBtn.setText("Xuất Excel");
+        xuatBtn.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        xuatBtn.setShadowColor(new java.awt.Color(0, 51, 255));
 
         panelBorder1.setBackground(new java.awt.Color(204, 204, 255));
 
@@ -343,60 +618,51 @@ public class Form_SuaThongTinKham extends javax.swing.JPanel {
             panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelBorder1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panelBorder1Layout.createSequentialGroup()
+                .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panelBorder1Layout.createSequentialGroup()
+                        .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addComponent(cnEdt, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel4)
+                            .addComponent(machEdt, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(panelBorder1Layout.createSequentialGroup()
+                                .addGap(150, 150, 150)
+                                .addComponent(jLabel3))
+                            .addGroup(panelBorder1Layout.createSequentialGroup()
+                                .addGap(34, 34, 34)
                                 .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(panelBorder1Layout.createSequentialGroup()
-                                        .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel1)
-                                            .addComponent(cnEdt, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jLabel4)
-                                            .addComponent(machEdt, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGap(38, 38, 38)
-                                        .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addGroup(panelBorder1Layout.createSequentialGroup()
-                                                .addComponent(haEdt, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addComponent(ntEdt, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                            .addGroup(panelBorder1Layout.createSequentialGroup()
-                                                .addComponent(jLabel2)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addComponent(jLabel3)
-                                                .addGap(34, 34, 34))
-                                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelBorder1Layout.createSequentialGroup()
-                                                .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                    .addComponent(nmEdt, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                    .addComponent(jLabel5))
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                    .addComponent(jLabel6)
-                                                    .addComponent(ndEdt, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                                    .addComponent(jLabel7)
-                                    .addComponent(ldkEdt, javax.swing.GroupLayout.PREFERRED_SIZE, 335, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel8)
-                                    .addComponent(tthtEdt, javax.swing.GroupLayout.PREFERRED_SIZE, 335, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel9)
-                                    .addComponent(cdEdt, javax.swing.GroupLayout.PREFERRED_SIZE, 335, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel11)
-                                    .addComponent(hdtEdt, javax.swing.GroupLayout.PREFERRED_SIZE, 335, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel12))
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelBorder1Layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(ckCb, javax.swing.GroupLayout.PREFERRED_SIZE, 335, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addContainerGap())
-                    .addGroup(panelBorder1Layout.createSequentialGroup()
-                        .addComponent(jLabel19)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel13)
-                        .addGap(114, 114, 114))
-                    .addGroup(panelBorder1Layout.createSequentialGroup()
-                        .addComponent(mbsCb, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(nkEdt, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(21, 21, 21))))
+                                    .addComponent(haEdt, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel2)
+                                    .addComponent(nmEdt, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel5))
+                                .addGap(33, 33, 33)
+                                .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(ntEdt, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(ndEdt, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel6)))))
+                    .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jLabel8)
+                        .addComponent(tthtEdt, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel9)
+                        .addComponent(cdEdt, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel11)
+                        .addComponent(hdtEdt, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel12)
+                        .addComponent(ckCb, javax.swing.GroupLayout.PREFERRED_SIZE, 302, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(panelBorder1Layout.createSequentialGroup()
+                            .addComponent(jLabel19)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel13)
+                            .addGap(95, 95, 95))
+                        .addComponent(ldkEdt, javax.swing.GroupLayout.PREFERRED_SIZE, 302, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel7)
+                        .addGroup(panelBorder1Layout.createSequentialGroup()
+                            .addComponent(mbsCb, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(nkEdt, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(2, 2, 2))))
+                .addGap(0, 19, Short.MAX_VALUE))
         );
         panelBorder1Layout.setVerticalGroup(
             panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -467,7 +733,7 @@ public class Form_SuaThongTinKham extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(updateBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(button2, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(xuatBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(18, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -479,14 +745,13 @@ public class Form_SuaThongTinKham extends javax.swing.JPanel {
                     .addComponent(panelBorder7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(button2, javax.swing.GroupLayout.DEFAULT_SIZE, 54, Short.MAX_VALUE)
+                    .addComponent(xuatBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 54, Short.MAX_VALUE)
                     .addComponent(updateBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private com.noitru.swing.Button button2;
     private com.noitru.swing.TextFeild cdEdt;
     private com.noitru.swing.jcombosuggestion.ComboBoxSuggestion ckCb;
     private com.noitru.swing.TextFeild cnEdt;
@@ -521,5 +786,6 @@ public class Form_SuaThongTinKham extends javax.swing.JPanel {
     private com.noitru.swing.Table table;
     private com.noitru.swing.TextFeild tthtEdt;
     private com.noitru.swing.Button updateBtn;
+    private com.noitru.swing.Button xuatBtn;
     // End of variables declaration//GEN-END:variables
 }

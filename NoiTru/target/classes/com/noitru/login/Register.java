@@ -4,6 +4,7 @@ import com.noitru.TaiKhoan;
 import com.noitru.login.swing.EventLogin;
 import com.noitru.login.swing.PanelCustom;
 import java.awt.event.ActionEvent;
+import javax.swing.JOptionPane;
 
 public class Register extends PanelCustom {
 
@@ -15,10 +16,12 @@ public class Register extends PanelCustom {
             String TaiKhoant = tkEdt.getText().trim();
             String MatKhau = passEdt.getText().trim();
             String Email = emailEdt.getText().trim();
-            TaiKhoan.addTaiKhoan(TaiKhoant, MatKhau, Email);
-
-            if (event != null) {
-                event.loginDone();
+            if (TaiKhoan.addTaiKhoan(TaiKhoant, MatKhau, Email)) {
+                if (event != null) {
+                    event.loginDone();
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "Lỗi");
             }
         });
     }

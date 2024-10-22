@@ -1,18 +1,28 @@
 package com.noitru.form;
 
 import com.noitru.BenhNhan;
+import com.noitru.ConnectDB;
 import com.noitru.DieuTri;
 import com.noitru.GiuongBenh;
+import com.noitru.HoaDon;
 import com.noitru.model.Model_BenhNhan;
 import com.noitru.model.Model_DieuTri;
 import com.noitru.model.Model_GiuongBenh;
+import com.noitru.model.Model_HoaDon;
+import com.noitru.print.FieldReportHoaDon;
+import com.noitru.print.ParameterReportHoaDon;
+import com.noitru.print.ReportManager;
 import java.awt.event.ActionEvent;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Form_XuatHoaDon extends javax.swing.JPanel {
+
+    private long soNgayO = 0;
+    private long tongTienPhong = 0;
 
     public Form_XuatHoaDon() {
         initComponents();
@@ -25,7 +35,32 @@ public class Form_XuatHoaDon extends javax.swing.JPanel {
             String MaBN = mbnCb.getSelectedItem().toString();
             BenhNhan.suaBenhNhanTheoTinhTrang(MaBN, "Đã Xuất Viện");
             BenhNhan.suaBenhNhanTheoNgayRaVien(MaBN, LocalDate.now().toString());
+            String Ten = null;
+            int TongTienThuoc = 0;
+            String LoaiPhong = null;
+            List<Model_HoaDon> hoaDonList = HoaDon.timKiemTheoMaBN(MaBN);
+            List<Model_BenhNhan> benhNhanList = BenhNhan.timKiemTheoMaBN(MaBN);
+            List<Model_GiuongBenh> tienPhongList = GiuongBenh.timKiemTheoMaBN(MaBN);
+            for (Model_GiuongBenh model_GiuongBenh : tienPhongList) {
+                LoaiPhong = model_GiuongBenh.getLoaiPhong();
+            }
+            for (Model_BenhNhan model_BenhNhan : benhNhanList) {
+                Ten = model_BenhNhan.getTenBN();
+            }
+            try {
+                ReportManager.getInstance().compileReport();
+                List<FieldReportHoaDon> field = new ArrayList<>();
+                for (Model_HoaDon hd : hoaDonList) {
+                    field.add(new FieldReportHoaDon(hd.getThuoc(), hd.getSoLuongThuoc(), hd.getGiaTien(), hd.getThanhTien(), LoaiPhong, soNgayO, tongTienPhong));
+                    TongTienThuoc += hd.getThanhTien();
+                }
+                ParameterReportHoaDon dataprint = new ParameterReportHoaDon(Ten, String.valueOf(tongTienPhong + TongTienThuoc), field);
+                ReportManager.getInstance().printReportPayment(dataprint);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
         });
+
     }
 
     private void xuatCB() {
@@ -50,8 +85,7 @@ public class Form_XuatHoaDon extends javax.swing.JPanel {
                 }
                 List<Model_GiuongBenh> tienPhongList = GiuongBenh.timKiemTheoMaBN(text);
                 List<Model_BenhNhan> ttkmList = BenhNhan.timKiemTheoMaBN(text);
-                long soNgayO = 0;
-                long tongTienPhong = 0;
+
                 String ngayHienTai = LocalDate.now().toString();
                 String ngayDKKham = null;
                 for (Model_BenhNhan thongTinKhamBenh : ttkmList) {

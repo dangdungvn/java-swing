@@ -10,7 +10,9 @@ C:\Users\Admin\Documents\NetBeansProjects\java-swing\NoiTru\src\main\java\com\no
 C:\Users\Admin\Documents\NetBeansProjects\java-swing\NoiTru\src\main\java\com\noitru\model\Model_BaoCao.java
 C:\Users\Admin\Documents\NetBeansProjects\java-swing\NoiTru\src\main\java\com\noitru\ConnectDB.java
 C:\Users\Admin\Documents\NetBeansProjects\java-swing\NoiTru\src\main\java\com\noitru\swing\jdatechooser\Event.java
+C:\Users\Admin\Documents\NetBeansProjects\java-swing\NoiTru\src\main\java\com\noitru\print\ReportManager.java
 C:\Users\Admin\Documents\NetBeansProjects\java-swing\NoiTru\src\main\java\com\noitru\login\swing\EventLogin.java
+C:\Users\Admin\Documents\NetBeansProjects\java-swing\NoiTru\src\main\java\com\noitru\print\FieldReportHoaDon.java
 C:\Users\Admin\Documents\NetBeansProjects\java-swing\NoiTru\src\main\java\com\noitru\form\Form_BenhNhan.java
 C:\Users\Admin\Documents\NetBeansProjects\java-swing\NoiTru\src\main\java\com\noitru\login\swing\Button.java
 C:\Users\Admin\Documents\NetBeansProjects\java-swing\NoiTru\src\main\java\com\noitru\form\Form_BacSi.java
@@ -22,6 +24,7 @@ C:\Users\Admin\Documents\NetBeansProjects\java-swing\NoiTru\src\main\java\com\no
 C:\Users\Admin\Documents\NetBeansProjects\java-swing\NoiTru\src\main\java\com\noitru\model\Model_ThongTinKhamBenh.java
 C:\Users\Admin\Documents\NetBeansProjects\java-swing\NoiTru\src\main\java\com\noitru\form\Form_SuaThongTinKham.java
 C:\Users\Admin\Documents\NetBeansProjects\java-swing\NoiTru\src\main\java\com\noitru\swing\blankchart\SeriesSize.java
+C:\Users\Admin\Documents\NetBeansProjects\java-swing\NoiTru\src\main\java\com\noitru\HoaDon.java
 C:\Users\Admin\Documents\NetBeansProjects\java-swing\NoiTru\src\main\java\com\noitru\swing\blankchart\BlankPlotChatRender.java
 C:\Users\Admin\Documents\NetBeansProjects\java-swing\NoiTru\src\main\java\com\noitru\component\Menu.java
 C:\Users\Admin\Documents\NetBeansProjects\java-swing\NoiTru\src\main\java\com\noitru\swing\ModelPieChart.java
@@ -37,6 +40,7 @@ C:\Users\Admin\Documents\NetBeansProjects\java-swing\NoiTru\src\main\java\com\no
 C:\Users\Admin\Documents\NetBeansProjects\java-swing\NoiTru\src\main\java\com\noitru\BenhNhan.java
 C:\Users\Admin\Documents\NetBeansProjects\java-swing\NoiTru\src\main\java\com\noitru\model\Model_GiuongBenh.java
 C:\Users\Admin\Documents\NetBeansProjects\java-swing\NoiTru\src\main\java\com\noitru\swing\jcombosuggestion\ComboSuggestionUI.java
+C:\Users\Admin\Documents\NetBeansProjects\java-swing\NoiTru\src\main\java\com\noitru\model\Model_HoaDon.java
 C:\Users\Admin\Documents\NetBeansProjects\java-swing\NoiTru\src\main\java\com\noitru\GiaThuoc.java
 C:\Users\Admin\Documents\NetBeansProjects\java-swing\NoiTru\src\main\java\com\noitru\swing\SearchText.java
 C:\Users\Admin\Documents\NetBeansProjects\java-swing\NoiTru\src\main\java\com\noitru\BacSi.java
@@ -48,6 +52,7 @@ C:\Users\Admin\Documents\NetBeansProjects\java-swing\NoiTru\src\main\java\com\no
 C:\Users\Admin\Documents\NetBeansProjects\java-swing\NoiTru\src\main\java\com\noitru\model\Model_PhongKham.java
 C:\Users\Admin\Documents\NetBeansProjects\java-swing\NoiTru\src\main\java\com\noitru\login\swing\Password.java
 C:\Users\Admin\Documents\NetBeansProjects\java-swing\NoiTru\src\main\java\com\noitru\swing\search\SearchOptinEvent.java
+C:\Users\Admin\Documents\NetBeansProjects\java-swing\NoiTru\src\main\java\com\noitru\print\ParameterReportHoaDon.java
 C:\Users\Admin\Documents\NetBeansProjects\java-swing\NoiTru\src\main\java\com\noitru\model\Model_Thuoc.java
 C:\Users\Admin\Documents\NetBeansProjects\java-swing\NoiTru\src\main\java\com\noitru\swing\jdatechooser\SelectedDate1.java
 C:\Users\Admin\Documents\NetBeansProjects\java-swing\NoiTru\src\main\java\com\noitru\login\LoginTrong.java

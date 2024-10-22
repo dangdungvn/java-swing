@@ -2,13 +2,11 @@ package com.noitru.form;
 
 import com.noitru.BenhNhan;
 import com.noitru.ConnectDB;
-import com.noitru.ThongTinKhamBenh;
 import com.noitru.component.CheckLoi;
 import com.noitru.model.Model_BenhNhan;
 import com.noitru.swing.ScrollBar;
 import com.noitru.swing.search.SearchOption;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -90,11 +88,11 @@ public class Form_BenhNhan extends javax.swing.JPanel {
 
                 cell = row.createCell(1, CellType.STRING);
                 cell.setCellStyle(cellStyle_Head);
-                cell.setCellValue("Mã Bác Sĩ");
+                cell.setCellValue("Mã Bệnh Nhân");
 
                 cell = row.createCell(2, CellType.STRING);
                 cell.setCellStyle(cellStyle_Head);
-                cell.setCellValue("Tên Bác Sĩ");
+                cell.setCellValue("Tên Bệnh Nhân");
 
                 cell = row.createCell(3, CellType.STRING);
                 cell.setCellStyle(cellStyle_Head);
@@ -119,9 +117,18 @@ public class Form_BenhNhan extends javax.swing.JPanel {
                 cell = row.createCell(8, CellType.STRING);
                 cell.setCellStyle(cellStyle_Head);
                 cell.setCellValue("Điện Thoại");
+
                 cell = row.createCell(9, CellType.STRING);
                 cell.setCellStyle(cellStyle_Head);
                 cell.setCellValue("Tình Trạng");
+
+                cell = row.createCell(10, CellType.STRING);
+                cell.setCellStyle(cellStyle_Head);
+                cell.setCellValue("Ngày ĐK Khám");
+
+                cell = row.createCell(11, CellType.STRING);
+                cell.setCellStyle(cellStyle_Head);
+                cell.setCellValue("Ngày Xuất Viện");
 
                 //Kết nối DB
                 Connection con = ConnectDB.connect();
@@ -155,7 +162,7 @@ public class Form_BenhNhan extends javax.swing.JPanel {
                     cell.setCellValue(rs.getString("TenBN"));
 
                     //Định dạng ngày tháng trong excel
-                    java.util.Date ngay = new java.util.Date(rs.getDate("Ngaysinh").getTime());
+                    java.util.Date ngay = new java.util.Date(rs.getDate("NgaySinh").getTime());
                     CellStyle cellStyle = workbook.createCellStyle();
                     cellStyle.setDataFormat(createHelper.createDataFormat().getFormat("dd/MM/yyyy"));
                     cellStyle.setBorderLeft(BorderStyle.THIN);
@@ -188,6 +195,30 @@ public class Form_BenhNhan extends javax.swing.JPanel {
                     cell = row.createCell(9);
                     cell.setCellStyle(cellStyle_data);
                     cell.setCellValue(rs.getString("TinhTrang"));
+
+                    java.util.Date ngayDK = new java.util.Date(rs.getDate("NgayDKKham").getTime());
+                    cellStyle.setDataFormat(createHelper.createDataFormat().getFormat("dd/MM/yyyy"));
+                    cellStyle.setBorderLeft(BorderStyle.THIN);
+                    cellStyle.setBorderRight(BorderStyle.THIN);
+                    cellStyle.setBorderBottom(BorderStyle.THIN);
+                    cell = row.createCell(10);
+                    cell.setCellValue(ngayDK);
+                    cell.setCellStyle(cellStyle);
+
+                    java.sql.Date ngayRaVienSql = rs.getDate("NgayRaVien");
+                    if (ngayRaVienSql != null) {
+                        java.util.Date ngayRV = new java.util.Date(ngayRaVienSql.getTime());
+                        cellStyle.setDataFormat(createHelper.createDataFormat().getFormat("dd/MM/yyyy"));
+                        cellStyle.setBorderLeft(BorderStyle.THIN);
+                        cellStyle.setBorderRight(BorderStyle.THIN);
+                        cellStyle.setBorderBottom(BorderStyle.THIN);
+                        cell = row.createCell(11);
+                        cell.setCellValue(ngayRV);
+                    } else {
+                        cell = row.createCell(11);
+                        cell.setCellValue("");  // Hoặc giá trị khác tùy vào yêu cầu
+                    }
+                    cell.setCellStyle(cellStyle);
                     i++;
                 }
                 for (int col = 0; col < tongsocot; col++) {

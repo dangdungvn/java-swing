@@ -17,6 +17,7 @@ com\noitru\form\Form_KhamBenh.class
 com\noitru\model\ModelChart.class
 com\noitru\login\swing\EventLogin.class
 com\noitru\swing\ListMenu.class
+com\noitru\print\FieldReportHoaDon.class
 com\noitru\model\Model_PhongKham.class
 com\noitru\login\LoginTrong.class
 com\noitru\swing\search\SearchOptinEvent.class
@@ -38,6 +39,7 @@ com\noitru\swing\jdatechooser\Slider$4.class
 com\noitru\login\swing\Password.class
 com\noitru\swing\jdatechooser\DateChooser.class
 com\noitru\form\Form_NhapVien$2.class
+com\noitru\HoaDon.class
 com\noitru\swing\jcombosuggestion\ComboBoxSuggestion.class
 com\noitru\swing\search\TextFieldSearchOption$3.class
 com\noitru\swing\jdatechooser\Slider$1.class
@@ -53,6 +55,7 @@ com\noitru\swing\Table$2.class
 com\noitru\swing\LabelColor.class
 com\noitru\form\Form_BacSi.class
 com\noitru\swing\ModelPieChart.class
+com\noitru\print\ReportManager.class
 com\noitru\swing\jdatechooser\Months.class
 com\noitru\model\Model_Menu.class
 com\noitru\swing\jdatechooser\DateChooser$7.class
@@ -81,6 +84,7 @@ com\noitru\swing\Combobox$ComboUI.class
 com\noitru\form\Form_ThongKe$1.class
 com\noitru\swing\jcombosuggestion\ComboSuggestionUI$1.class
 com\noitru\swing\jcombosuggestion\ComboSuggestionUI$ComboSuggestionPopup.class
+com\noitru\model\Model_HoaDon.class
 com\noitru\form\Form_NhapVien$1.class
 com\noitru\swing\Combobox$ComboUI$4.class
 com\noitru\form\Form_BenhNhan$1.class
@@ -120,6 +124,7 @@ com\noitru\form\Form_BacSi$1.class
 com\noitru\TaiKhoan.class
 com\noitru\swing\blankchart\BlankPlotChatRender.class
 com\noitru\swing\jdatechooser\Button.class
+com\noitru\print\ParameterReportHoaDon.class
 com\noitru\swing\blankchart\SeriesSize.class
 com\noitru\form\Form_SuaThongTinKham$1.class
 com\noitru\swing\jdatechooser\Dates.class
