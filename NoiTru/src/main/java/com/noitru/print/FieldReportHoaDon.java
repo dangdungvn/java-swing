@@ -6,45 +6,16 @@ public class FieldReportHoaDon {
     int qty;
     double price;
     double total;
-    String loaiphong;
-    long songayo;
-    long thanhtien;
 
-    public String getLoaiphong() {
-        return loaiphong;
-    }
-
-    public void setLoaiphong(String loaiphong) {
-        this.loaiphong = loaiphong;
-    }
-
-    public long getSongayo() {
-        return songayo;
-    }
-
-    public void setSongayo(int songayo) {
-        this.songayo = songayo;
-    }
-
-    public long getThanhtien() {
-        return thanhtien;
-    }
-
-    public void setThanhtien(int thanhtien) {
-        this.thanhtien = thanhtien;
-    }
-
-    public FieldReportHoaDon() {
-    }
-
-    public FieldReportHoaDon(String name, int qty, double price, double total, String loaiphong, long songayo, long thanhtien) {
+    public FieldReportHoaDon(String name, int qty, double price, double total) {
         this.name = name;
         this.qty = qty;
         this.price = price;
         this.total = total;
-        this.loaiphong = loaiphong;
-        this.songayo = songayo;
-        this.thanhtien = thanhtien;
+
+    }
+
+    public FieldReportHoaDon() {
     }
 
     public String getName() {
@@ -78,5 +49,4 @@ public class FieldReportHoaDon {
     public void setTotal(double total) {
         this.total = total;
     }
-
 }

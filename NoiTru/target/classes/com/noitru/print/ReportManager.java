@@ -1,6 +1,8 @@
 package com.noitru.print;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperCompileManager;
@@ -33,6 +35,9 @@ public class ReportManager {
         Map para = new HashMap();
         para.put("tenBenhNhan", data.getTenBenhNhan());
         para.put("tongTien", data.getTongTien());
+        para.put("loaiPhong", data.getLoaiPhong());
+        para.put("soNgayO", data.getSoNgayO());
+        para.put("tienPhong", data.getTienPhong());
         JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(data.getFields());
         JasperPrint print = JasperFillManager.fillReport(reportPay, para, dataSource);
         view(print);

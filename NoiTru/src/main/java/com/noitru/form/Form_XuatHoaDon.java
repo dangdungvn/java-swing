@@ -1,7 +1,6 @@
 package com.noitru.form;
 
 import com.noitru.BenhNhan;
-import com.noitru.ConnectDB;
 import com.noitru.DieuTri;
 import com.noitru.GiuongBenh;
 import com.noitru.HoaDon;
@@ -21,8 +20,8 @@ import java.util.List;
 
 public class Form_XuatHoaDon extends javax.swing.JPanel {
 
-    private long soNgayO = 0;
-    private long tongTienPhong = 0;
+    private long soNgayO;
+    private long tongTienPhong;
 
     public Form_XuatHoaDon() {
         initComponents();
@@ -33,8 +32,8 @@ public class Form_XuatHoaDon extends javax.swing.JPanel {
     private void xuatHoaDon() {
         xuatHoaDonBtn.addActionListener((ActionEvent e) -> {
             String MaBN = mbnCb.getSelectedItem().toString();
-            BenhNhan.suaBenhNhanTheoTinhTrang(MaBN, "Đã Xuất Viện");
-            BenhNhan.suaBenhNhanTheoNgayRaVien(MaBN, LocalDate.now().toString());
+//            BenhNhan.suaBenhNhanTheoTinhTrang(MaBN, "Đã Xuất Viện");
+//            BenhNhan.suaBenhNhanTheoNgayRaVien(MaBN, LocalDate.now().toString());
             String Ten = null;
             int TongTienThuoc = 0;
             String LoaiPhong = null;
@@ -51,10 +50,12 @@ public class Form_XuatHoaDon extends javax.swing.JPanel {
                 ReportManager.getInstance().compileReport();
                 List<FieldReportHoaDon> field = new ArrayList<>();
                 for (Model_HoaDon hd : hoaDonList) {
-                    field.add(new FieldReportHoaDon(hd.getThuoc(), hd.getSoLuongThuoc(), hd.getGiaTien(), hd.getThanhTien(), LoaiPhong, soNgayO, tongTienPhong));
+                    field.add(new FieldReportHoaDon(hd.getThuoc(), hd.getSoLuongThuoc(), hd.getGiaTien(), hd.getThanhTien()));
                     TongTienThuoc += hd.getThanhTien();
                 }
-                ParameterReportHoaDon dataprint = new ParameterReportHoaDon(Ten, String.valueOf(tongTienPhong + TongTienThuoc), field);
+//                field.add(new FieldReportHoaDon(LoaiPhong, soNgayO, tongTienPhong));
+                ParameterReportHoaDon dataprint = new ParameterReportHoaDon(Ten, String.valueOf(tongTienPhong + TongTienThuoc),
+                         LoaiPhong, String.valueOf(soNgayO), String.valueOf(tongTienPhong), field);
                 ReportManager.getInstance().printReportPayment(dataprint);
             } catch (Exception ex) {
                 ex.printStackTrace();

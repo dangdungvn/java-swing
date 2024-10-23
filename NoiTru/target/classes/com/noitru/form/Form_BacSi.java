@@ -1,5 +1,6 @@
 package com.noitru.form;
 
+import com.noitru.BacSi;
 import com.noitru.ConnectDB;
 import com.noitru.component.CheckLoi;
 import com.noitru.model.Model_BacSi;
@@ -153,7 +154,7 @@ public class Form_BacSi extends javax.swing.JPanel {
     }
 
     private void cbData() {
-        List<String> data = com.noitru.BacSi.getAllChuyenKhoa();
+        List<String> data = BacSi.getAllChuyenKhoa();
         for (String item : data) {
             chuyenkhoaCb.addItem(item);
         }
@@ -178,7 +179,7 @@ public class Form_BacSi extends javax.swing.JPanel {
                         case 0 -> {
                             ((DefaultTableModel) bsTable.getModel()).setRowCount(0);
                             SwingUtilities.invokeLater(() -> {
-                                List<Model_BacSi> bacSiList = com.noitru.BacSi.timKiemTheoMaBS(text);
+                                List<Model_BacSi> bacSiList = BacSi.timKiemTheoMaBS(text);
                                 for (Model_BacSi bacSi : bacSiList) {
                                     Object[] row = {bacSi.getMaBS(), bacSi.getTenBS(), bacSi.getKinhNghiem(),
                                         bacSi.getChuyenKhoa()};
@@ -189,7 +190,7 @@ public class Form_BacSi extends javax.swing.JPanel {
                         default -> {
                             ((DefaultTableModel) bsTable.getModel()).setRowCount(0);
                             SwingUtilities.invokeLater(() -> {
-                                List<Model_BacSi> bacSiList = com.noitru.BacSi.timKiemTheoTenBS(text);
+                                List<Model_BacSi> bacSiList = BacSi.timKiemTheoTenBS(text);
                                 for (Model_BacSi bacSi : bacSiList) {
                                     Object[] row = {bacSi.getMaBS(), bacSi.getTenBS(), bacSi.getKinhNghiem(),
                                         bacSi.getChuyenKhoa()};
@@ -245,7 +246,7 @@ public class Form_BacSi extends javax.swing.JPanel {
                 if (MaBS.isEmpty() || TenBS.isEmpty() || KinhNghiem.isEmpty() || ChuyenKhoa.isEmpty()) {
                     JOptionPane.showMessageDialog(this, "Vui lòng điền đầy đủ!");
                 } else {
-                    com.noitru.BacSi.suaBacSi(MaBS, TenBS, KinhNghiem, ChuyenKhoa);
+                    BacSi.suaBacSi(MaBS, TenBS, KinhNghiem, ChuyenKhoa);
                     getAllDataBacSi();
                     mbsEdt.setText("");
                     tbsEdt.setText("");
@@ -271,7 +272,7 @@ public class Form_BacSi extends javax.swing.JPanel {
                 if (MaBS.isEmpty() || TenBS.isEmpty() || KinhNghiem.isEmpty() || ChuyenKhoa.isEmpty()) {
                     JOptionPane.showMessageDialog(this, "Vui lòng điền đầy đủ thông tin!");
                 } else {
-                    com.noitru.BacSi.addBacSi(MaBS, TenBS, KinhNghiem, ChuyenKhoa);
+                    BacSi.addBacSi(MaBS, TenBS, KinhNghiem, ChuyenKhoa);
                     getAllDataBacSi();
                     mbsEdt.setText("");
                     tbsEdt.setText("");
@@ -286,7 +287,7 @@ public class Form_BacSi extends javax.swing.JPanel {
     private void getAllDataBacSi() {
         ((DefaultTableModel) bsTable.getModel()).setRowCount(0);
         SwingUtilities.invokeLater(() -> {
-            List<Model_BacSi> bacSiList = com.noitru.BacSi.getAllBacSi();
+            List<Model_BacSi> bacSiList = BacSi.getAllBacSi();
             for (Model_BacSi bacSi : bacSiList) {
                 Object[] row = {bacSi.getMaBS(), bacSi.getTenBS(), bacSi.getKinhNghiem(),
                     bacSi.getChuyenKhoa()};
@@ -322,8 +323,6 @@ public class Form_BacSi extends javax.swing.JPanel {
         nknEdt = new com.noitru.swing.TextFeild();
         tbsEdt = new com.noitru.swing.TextFeild();
         chuyenkhoaCb = new com.noitru.swing.jcombosuggestion.ComboBoxSuggestion();
-
-        setBackground(new java.awt.Color(242, 242, 242));
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(112, 112, 214));

@@ -100,6 +100,7 @@ public class BacSi {
                 bacSiList.add(bacSi);
             }
         } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
         }
         return bacSiList;
     }
@@ -114,6 +115,7 @@ public class BacSi {
             stmt.setString(4, ChuyenKhoa);
             stmt.executeUpdate();
         } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
         }
     }
 
@@ -128,6 +130,7 @@ public class BacSi {
             stmt.setString(4, MaBS);
             stmt.executeUpdate();
         } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
         }
     }
 }
