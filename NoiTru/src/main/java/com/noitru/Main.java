@@ -9,14 +9,10 @@ import com.noitru.form.Form_DieuTriHangNgay;
 import com.noitru.form.Form_SuaThongTinKham;
 import com.noitru.form.Form_BenhNhan;
 import com.noitru.form.Form_ThongKe;
-import com.noitru.login.swing.EventLogin;
 import java.awt.Color;
 import javax.swing.JComponent;
 
 public class Main extends javax.swing.JFrame {
-
-    EventLogin event;
-    Login login;
 
     public Main() {
         initComponents();
@@ -61,9 +57,6 @@ public class Main extends javax.swing.JFrame {
     }
 
     @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated
-    // <editor-fold defaultstate="collapsed" desc="Generated
-    // <editor-fold defaultstate="collapsed" desc="Generated
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -122,11 +115,6 @@ public class Main extends javax.swing.JFrame {
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        // </editor-fold>
-
-        // </editor-fold>
-
-        /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new Main().setVisible(true);
@@ -140,7 +128,4 @@ public class Main extends javax.swing.JFrame {
     private com.noitru.swing.PanelBorder panelBorder1;
     // End of variables declaration//GEN-END:variables
 
-    void setEventLogin(EventLogin event) {
-        this.event = event;
-    }
 }
